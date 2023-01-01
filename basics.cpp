@@ -1,24 +1,23 @@
 #include "basics.h"
 
-void getinputUser(string requestUser, string* choiceUser)
+void getinputUser(const std::string& requestUser, std::string* choiceUser)
 {
-    string inputUser;
-    cout << requestUser << endl;
-    getline(cin, inputUser); // getline in order to get user input even if there are blank space character
-    stringstream(inputUser) >> *choiceUser; // stringstream allows a string-based object to be treated as a stream, thus the string can be converted into another object type.
+    std::string inputUser;
+    std::cout << requestUser << std::endl;
+    getline(std::cin, inputUser); // getline in order to get user input even if there are blank space character
+    std::stringstream(inputUser) >> *choiceUser; // stringstream allows a string-based object to be treated as a stream, thus the string can be converted into another object type.
 
 }
-
-void getinputUser(string requestUser, int* choiceUser)
+void getinputUser(const std::string& requestUser, int* choiceUser)
 {
-    string inputUser;
-    cout << requestUser << endl;
-    getline(cin, inputUser); // getline in order to get user input even if there are blank space character
-    stringstream(inputUser) >> *choiceUser; // stringstream allows a string-based object to be treated as a stream, thus the string can be converted into another object type.
+    std::string inputUser;
+    std::cout << requestUser << std::endl;
+    getline(std::cin, inputUser); // getline in order to get user input even if there are blank space character
+    std::stringstream(inputUser) >> *choiceUser; // stringstream allows a string-based object to be treated as a stream, thus the string can be converted into another object type.
 }
 
 
-int sumArray(int* array, int size)
+int sumArray(int* array, const int size)
 {
     if(size > 0)
     {

@@ -6,12 +6,10 @@
 #include <sstream>
 #include <math.h>
 
-using namespace std;
+void getinputUser(const std::string& requestUser, std::string* choiceUser);
+void getinputUser(const std::string& requestUser, int* choiceUser);
 
-void getinputUser(string requestUser, string* choiceUser);
-void getinputUser(string requestUser, int* choiceUser);
-
-int sumArray(int* array, int size);
+int sumArray(int* array, const int size);
 
 
 #endif

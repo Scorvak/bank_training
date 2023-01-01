@@ -14,7 +14,7 @@ int Wallet::getCredit(){return this->balance.nbprofits;};
 
 void Wallet::computeWallet(){
     
-    cout << "Total profits: " << sumArray(this->balance.profits,this->balance.nbprofits) << "\n" << "Total expenses:" <<  sumArray(this->balance.expenses,balance.nbexpenses) << endl;
+    std::cout << "Total profits: " << sumArray(this->balance.profits,this->balance.nbprofits) << "\n" << "Total expenses:" <<  sumArray(this->balance.expenses,balance.nbexpenses) << endl;
     
     this->money = this-> money + (sumArray(this->balance.profits,this->balance.nbprofits) - sumArray(this->balance.expenses,balance.nbexpenses));
     

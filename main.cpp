@@ -5,43 +5,40 @@
 #include "basics.h"
 #include "classes.h"
 
-using namespace std;
-
-
 int main()
 
 {
     int nbCredit, nbDebit, debitMoney = 0, creditMoney = 0;
 
-    People Person1;
-    People* pPerson1;
+    People Person1, Person2;
+    People* pPerson[2] = {&Person1, &Person2};
 
-    pPerson1 = &Person1;
 
-    pPerson1->getName();
-    pPerson1->getAge();
- 
-pPerson1->ownWallet.askCredit();
-pPerson1->ownWallet.askDebit();
+    for(int per = 0; per < 2;per ++)
+    {
+        pPerson[per]->getName();
+        pPerson[per]->getAge();
 
-nbCredit = pPerson1->ownWallet.getCredit();
-nbDebit = pPerson1->ownWallet.getDebit();
+        pPerson[per]->ownWallet.askCredit();
+        pPerson[per]->ownWallet.askDebit();
 
-    
-    if(nbDebit > 0)
+        nbCredit = pPerson[per]->ownWallet.getCredit();
+        nbDebit = pPerson[per]->ownWallet.getDebit();
+
+        if(nbDebit > 0)
     {
         for(int i = 0; i < nbDebit; i++)
-        {pPerson1->ownWallet.addDebit(i);}  
+        {pPerson[per]->ownWallet.addDebit(i);}  
     }
 
     if(nbCredit > 0){
         for(int i = 0; i < nbCredit ; i++)
-        {pPerson1->ownWallet.addCredit(i);}
-    }
-    
-    pPerson1->ownWallet.computeWallet();
-    cout << "Then your remaining money is " << pPerson1->ownWallet.showWallet() << endl;
+        {pPerson[per]->ownWallet.addCredit(i);}
+        }
 
+        pPerson[per]->ownWallet.computeWallet();
+        std::cout << "Then your remaining money is " << pPerson[per]->ownWallet.showWallet() << endl;
+    }
 
     return 0;
 }

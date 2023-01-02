@@ -13,7 +13,6 @@ int main()
     People Person1, Person2;
     People* pPerson[2] = {&Person1, &Person2};
 
-
     for(int per = 0; per < 2;per ++)
     {
         pPerson[per]->getName();
@@ -23,22 +22,15 @@ int main()
         pPerson[per]->ownWallet.askDebit();
 
         nbCredit = pPerson[per]->ownWallet.getCredit();
+        if(nbCredit > 0){for(int i = 0; i < nbCredit ; i++){pPerson[per]->ownWallet.addCredit(i);}}
+
         nbDebit = pPerson[per]->ownWallet.getDebit();
-
-        if(nbDebit > 0)
-    {
-        for(int i = 0; i < nbDebit; i++)
-        {pPerson[per]->ownWallet.addDebit(i);}  
-    }
-
-    if(nbCredit > 0){
-        for(int i = 0; i < nbCredit ; i++)
-        {pPerson[per]->ownWallet.addCredit(i);}
-        }
+        if(nbDebit > 0){for(int i = 0; i < nbDebit; i++){pPerson[per]->ownWallet.addDebit(i);}}
 
         pPerson[per]->ownWallet.computeWallet();
-        std::cout << "Then your remaining money is " << pPerson[per]->ownWallet.showWallet() << endl;
-    }
+        std::cout << "Then your remaining money is " << pPerson[per]->ownWallet.showWallet() << "\n" << endl;}
+
+    pPerson[0]->ownWallet.convertCurrency();
 
     return 0;
 }

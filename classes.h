@@ -8,10 +8,11 @@
 
 using namespace std;
 
-struct Balance {
+enum Currency {euro, dollar, yen};
 
-    int expenses[10] = {0};
-    int profits[10] = {0};
+struct Balance {
+    float expenses[10] = {0};
+    float profits[10] = {0};
     int nbexpenses = 10;
     int nbprofits = 10;
 };
@@ -21,25 +22,33 @@ class Wallet {
 private:
 
 Balance balance;
-
-int money;
+Currency currency;
 
 union {
     struct {
         float dollar;
         float euro;
         float yen;
-    } Currency;
+    } money;
 };
 public:
 
+// Asks user ow many times there will be a money input
 void addDebit(int index);
 void addCredit(int index);
+
+// Gets from the user the money input
 void askDebit();
 void askCredit();
+
+// Shows to the user how many inputs there are
 int getDebit();
 int getCredit();
+
+// Computes the total benefit and expense of the user money
 void computeWallet();
+
+
 int showWallet();
 void convertCurrency();
 

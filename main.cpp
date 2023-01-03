@@ -13,7 +13,7 @@ int main()
     People Person1, Person2;
     People* pPerson[2] = {&Person1, &Person2};
 
-    for(int per = 0; per < 2;per ++)
+    for(int per = 0; per < 1;per ++)
     {
         pPerson[per]->getName();
         pPerson[per]->getAge();

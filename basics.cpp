@@ -28,24 +28,12 @@ void getinputUser(const std::string& requestUser, float* choiceUser)
 
 int sumArray(int* array, const int size)
 {
-    if(size > 0)
-    {
-        return *(array + size) + sumArray(array, size - 1);
-    }
-    else{
-        return *array;
-
-    } 
+    if(size > 0){return *(array + size) + sumArray(array, size - 1);}
+    else{return *array;} 
 }
 
 float sumArray(float* array, const int size)
 {
-    if(size > 0)
-    {
-        return *(array + size) + sumArray(array, size - 1);
-    }
-    else{
-        return *array;
-
-    } 
+    if(size > 0){return *(array + size) + sumArray(array, size - 1);}
+    else{return *array;} 
 }

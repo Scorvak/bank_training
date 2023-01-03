@@ -48,9 +48,16 @@ int getCredit();
 // Computes the total benefit and expense of the user money
 void computeWallet();
 
-
+// Shows available money in the wallet
 int showWallet();
+
+// Converts money in another currency
 void convertCurrency();
+void showConversion(float& premoney,float* postmoney, string& preconv,string& postconv);
+
+
+// cout << "Successful conversion of your " << money << " "<< preconv << "in " << this->money.dollar << " " << postconv << "." << endl;
+
 
 friend class People;
 

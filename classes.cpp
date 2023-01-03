@@ -25,42 +25,49 @@ void Wallet::computeWallet(){
     
     };
 
+// Shows available money in the wallet
 int Wallet::showWallet(){return this->money.euro;};
 
+// Converts money in another currency
 void Wallet::convertCurrency(){
 
     int choice;
-
-    do{
-
-        getinputUser("In which currency do you want to convert your money ?\n1.\teuro\n2.\tdollar\n3.\tyen\n",&choice);
-
-    if(choice != 1 && choice != 2 && choice != 3){std::cout << "Please chose a valid currency." << std::endl;}
-
-    }while(choice != 1 && choice != 2 && choice != 3);
-
-    float money = this->money.euro;
-
-    switch (choice)
+    float money;
+    string preconv, postconv;
+    
+    switch(this->currency)
     {
-    case 1:
-        this->currency = euro;
-        std::cout << "The currency was already in euro, no conversion occured." << std::endl;
-        break;
-    case 2:
-        this->currency = dollar;
-        this->money.dollar = money * 1.07;
-        cout << "Your " << money << "euro have been converted into " << this->money.dollar << " dollar." << std::endl;
-        break;
-    case 3:
-        this->currency = yen;
-        this->money.dollar = money * 140.22;
-        cout << "Your " << money << "euro have been converted into " << this->money.yen << " yen." << std::endl;
-        break;
+        case Currency::dollar:
+            money = this->money.dollar;
+            preconv = "dollar";
+            getinputUser("In which currency do you want to convert your money ?\n1.\teuro\n2.\tyen\n",&choice);
+            if(choice == 1){this->money.euro = money * 0.94; postconv = "euro"; this->currency = euro; showConversion(money, &(this->money.euro),preconv,postconv);}
+            else if(choice == 2){this->money.yen = money * 130.76; postconv = "yen"; this->currency = yen; showConversion(money, &(this->money.yen),preconv,postconv);}
+            break;
+
+        case Currency::euro:
+            money = this->money.euro;
+            preconv = "euro";
+            getinputUser("In which currency do you want to convert your money ?\n1.\tdollar\n2.\tyen\n",&choice);
+            if(choice == 1){this->money.dollar = money * 1.07; postconv = "dollar"; this->currency = dollar; showConversion(money, &(this->money.dollar),preconv,postconv);}
+            else if(choice == 2){this->money.yen = money * 140.22; postconv = "yen"; this->currency = yen; showConversion(money, &(this->money.yen),preconv,postconv);}
+            break;
+
+        case Currency::yen:
+            money = this->money.yen;
+            preconv = "yen";
+            getinputUser("In which currency do you want to convert your money ?\n1.\tdollar\n2.\teuro\n",&choice);
+            if(choice == 1){this->money.dollar = money * 0.0076; postconv = "dollar"; this->currency = dollar; showConversion(money, &(this->money.dollar),preconv,postconv);}
+            else if(choice == 2){this->money.euro = money * 0.0072; postconv = "euro"; this->currency = euro; showConversion(money, &(this->money.euro),preconv,postconv);}
+            break;
+
     }
 
 
 };
+
+void Wallet::showConversion(float& premoney, float* postmoney, string& preconv, string& postconv)
+ {std::cout << "Successful conversion of your " << premoney << " " << preconv << " in " << *postmoney << " " << postconv << "." << std::endl;};
 
 // People class methods
 
@@ -68,4 +75,3 @@ People::People(){this->ownWallet.money.euro = 2000; this->ownWallet.currency = e
 
 void People::getName(){getinputUser("What is your firstname ?", &(this->firstname));}
 void People::getAge(){getinputUser("How old are you ?", &(this->age));}
-

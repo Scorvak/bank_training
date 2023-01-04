@@ -8,6 +8,7 @@
 
 void getinputUser(const std::string& requestUser, std::string* choiceUser);
 void getinputUser(const std::string& requestUser, int* choiceUser);
+void getinputUser(const std::string& requestUser, int& choiceUser);
 void getinputUser(const std::string& requestUser, float* choiceUser);
 
 

@@ -1,6 +1,4 @@
-#include "basics.h"
 #include "classes.h"
-
 
 // Wallet class methods 
 
@@ -19,7 +17,7 @@ int Wallet::getCredit(){return this->balance.nbprofits;};
 // Computes the total benefit and expense of the user money
 void Wallet::computeWallet(){
     
-    std::cout << "Total profits: " << sumArray(this->balance.profits,this->balance.nbprofits) << "\n" << "Total expenses:" <<  sumArray(this->balance.expenses,balance.nbexpenses) << endl;
+    std::cout << "Total profits: " << sumArray(this->balance.profits,this->balance.nbprofits) << "\n" << "Total expenses:" <<  sumArray(this->balance.expenses,balance.nbexpenses) << std::endl;
     
     this->money.euro = this-> money.euro + (sumArray(this->balance.profits,this->balance.nbprofits) - sumArray(this->balance.expenses,balance.nbexpenses));
     
@@ -27,20 +25,21 @@ void Wallet::computeWallet(){
 
 // Shows available money in the wallet
 int Wallet::showWallet(){return this->money.euro;};
+int Wallet::showCurrency(){return int(this->currency);};
 
 // Converts money in another currency
 void Wallet::convertCurrency(){
 
     int choice;
     float money;
-    string preconv, postconv;
+    std::string preconv, postconv;
     
     switch(this->currency)
     {
         case Currency::dollar:
             money = this->money.dollar;
             preconv = "dollar";
-            getinputUser("In which currency do you want to convert your money ?\n1.\teuro\n2.\tyen\n",&choice);
+            getinputUser("In which currency do you want to convert your balance ?\n1.\teuro\n2.\tyen\n",&choice);
             if(choice == 1){this->money.euro = money * 0.94; postconv = "euro"; this->currency = euro; showConversion(money, &(this->money.euro),preconv,postconv);}
             else if(choice == 2){this->money.yen = money * 130.76; postconv = "yen"; this->currency = yen; showConversion(money, &(this->money.yen),preconv,postconv);}
             break;
@@ -48,7 +47,7 @@ void Wallet::convertCurrency(){
         case Currency::euro:
             money = this->money.euro;
             preconv = "euro";
-            getinputUser("In which currency do you want to convert your money ?\n1.\tdollar\n2.\tyen\n",&choice);
+            getinputUser("In which currency do you want to convert your balance ?\n1.\tdollar\n2.\tyen\n",&choice);
             if(choice == 1){this->money.dollar = money * 1.07; postconv = "dollar"; this->currency = dollar; showConversion(money, &(this->money.dollar),preconv,postconv);}
             else if(choice == 2){this->money.yen = money * 140.22; postconv = "yen"; this->currency = yen; showConversion(money, &(this->money.yen),preconv,postconv);}
             break;
@@ -56,22 +55,24 @@ void Wallet::convertCurrency(){
         case Currency::yen:
             money = this->money.yen;
             preconv = "yen";
-            getinputUser("In which currency do you want to convert your money ?\n1.\tdollar\n2.\teuro\n",&choice);
+            getinputUser("In which currency do you want to convert your balance ?\n1.\tdollar\n2.\teuro\n",&choice);
             if(choice == 1){this->money.dollar = money * 0.0076; postconv = "dollar"; this->currency = dollar; showConversion(money, &(this->money.dollar),preconv,postconv);}
             else if(choice == 2){this->money.euro = money * 0.0072; postconv = "euro"; this->currency = euro; showConversion(money, &(this->money.euro),preconv,postconv);}
             break;
 
     }
 
-
 };
 
-void Wallet::showConversion(float& premoney, float* postmoney, string& preconv, string& postconv)
+void Wallet::showConversion(float& premoney, float* postmoney, std::string& preconv, std::string& postconv)
  {std::cout << "Successful conversion of your " << premoney << " " << preconv << " in " << *postmoney << " " << postconv << "." << std::endl;};
 
 // People class methods
 
-People::People(){this->ownWallet.money.euro = 2000; this->ownWallet.currency = euro;};
+People::People(){this->ownWallet.money.euro = 0; this->ownWallet.currency = euro;};
 
-void People::getName(){getinputUser("What is your firstname ?", &(this->firstname));}
-void People::getAge(){getinputUser("How old are you ?", &(this->age));}
+void People::getName(){getinputUser("Please enter your firstname:\n", &(this->firstname));}
+void People::getPassword(){getinputUser("Please enter a password for your account:\n", &(this->password));}
+void People::getAge(){getinputUser("Please enter your age:\n", &(this->age));}
+
+int People::showAge(){return this->age;}

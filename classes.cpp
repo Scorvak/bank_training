@@ -2,77 +2,83 @@
 
 // Wallet class methods 
 
-// Asks user ow many times there will be a money input
-void Wallet::askDebit(){getinputUser("How many items did you buy ?", &(this->balance.nbexpenses));};
-void Wallet::askCredit(){getinputUser("How many funds did you get ?", &(this->balance.nbprofits));};
-
 // Gets from the user the money input
-void Wallet::addDebit(int index){getinputUser("How much did it cost ?", &(this->balance.expenses[index]));};
-void Wallet::addCredit(int index){getinputUser("How much did you get ?", &(this->balance.profits[index]));};
-
-// Shows to the user how many inputs there are
-int Wallet::getDebit(){return this->balance.nbexpenses;};
-int Wallet::getCredit(){return this->balance.nbprofits;};
+void Bank::getDebit(int& index, int& user){getinputUser("How much did it cost ?", &(this->customers[user].ownWallet.balance.expenses[index]));}; 
+void Bank::getCredit(int& index, int& user){getinputUser("How much did you get ?", &(this->customers[user].ownWallet.balance.profits[index]));};
 
 // Computes the total benefit and expense of the user money
-void Wallet::computeWallet(){
+void Bank::computeWallet(int& user){
+
+    Currency currency = this->customers[user].ownWallet.currency;
+    float profits = sumArray(this->customers[user].ownWallet.balance.profits,this->customers[user].ownWallet.balance.sizeBalance);
+    float expenses = sumArray(this->customers[user].ownWallet.balance.expenses,this->customers[user].ownWallet.balance.sizeBalance);
     
-    std::cout << "Total profits: " << sumArray(this->balance.profits,this->balance.nbprofits) << "\n" << "Total expenses:" <<  sumArray(this->balance.expenses,balance.nbexpenses) << std::endl;
+    std::cout << "Total profits: " << profits << "\n" << "Total expenses:" << expenses << std::endl;
     
-    this->money.euro = this-> money.euro + (sumArray(this->balance.profits,this->balance.nbprofits) - sumArray(this->balance.expenses,balance.nbexpenses));
-    
-    };
+    switch(currency)
+    {
+        case euro:
+        this->customers[user].ownWallet.money.euro = this->customers[user].ownWallet.money.euro + profits - expenses;
+        break;
+        case dollar:
+        this->customers[user].ownWallet.money.dollar = this->customers[user].ownWallet.money.dollar + profits - expenses;
+        break;
+        case yen:
+        this->customers[user].ownWallet.money.yen = this->customers[user].ownWallet.money.yen + profits - expenses;
+        break;
+
+    }
+};
 
 // Shows available money in the wallet
-int Wallet::showWallet(){return this->money.euro;};
-int Wallet::showCurrency(){return int(this->currency);};
+int Bank::showWallet(int& user){return this->customers[user].ownWallet.money.euro;};
+int Bank::showCurrency(int& user){return int(this->customers[user].ownWallet.currency);};
 
 // Converts money in another currency
-void Wallet::convertCurrency(){
+void Bank::convertCurrency(int& user){
 
     int choice;
     float money;
     std::string preconv, postconv;
     
-    switch(this->currency)
+    switch(this->customers[user].ownWallet.currency)
     {
         case Currency::dollar:
-            money = this->money.dollar;
+            money = this->customers[user].ownWallet.money.dollar;
             preconv = "dollar";
             getinputUser("In which currency do you want to convert your balance ?\n1.\teuro\n2.\tyen\n",&choice);
-            if(choice == 1){this->money.euro = money * 0.94; postconv = "euro"; this->currency = euro; showConversion(money, &(this->money.euro),preconv,postconv);}
-            else if(choice == 2){this->money.yen = money * 130.76; postconv = "yen"; this->currency = yen; showConversion(money, &(this->money.yen),preconv,postconv);}
+            if(choice == 1){this->customers[user].ownWallet.money.euro = money * 0.94; postconv = "euro"; this->customers[user].ownWallet.currency = euro; showConversion(money, &(this->customers[user].ownWallet.money.euro),preconv,postconv);}
+            else if(choice == 2){this->customers[user].ownWallet.money.yen = money * 130.76; postconv = "yen"; this->customers[user].ownWallet.currency = yen; showConversion(money, &(this->customers[user].ownWallet.money.yen),preconv,postconv);}
             break;
 
         case Currency::euro:
-            money = this->money.euro;
+            money = this->customers[user].ownWallet.money.euro;
             preconv = "euro";
             getinputUser("In which currency do you want to convert your balance ?\n1.\tdollar\n2.\tyen\n",&choice);
-            if(choice == 1){this->money.dollar = money * 1.07; postconv = "dollar"; this->currency = dollar; showConversion(money, &(this->money.dollar),preconv,postconv);}
-            else if(choice == 2){this->money.yen = money * 140.22; postconv = "yen"; this->currency = yen; showConversion(money, &(this->money.yen),preconv,postconv);}
+            if(choice == 1){this->customers[user].ownWallet.money.dollar = money * 1.07; postconv = "dollar"; this->customers[user].ownWallet.currency = dollar; showConversion(money, &(this->customers[user].ownWallet.money.dollar),preconv,postconv);}
+            else if(choice == 2){this->customers[user].ownWallet.money.yen = money * 140.22; postconv = "yen"; this->customers[user].ownWallet.currency = yen; showConversion(money, &(this->customers[user].ownWallet.money.yen),preconv,postconv);}
             break;
 
         case Currency::yen:
-            money = this->money.yen;
+            money = this->customers[user].ownWallet.money.yen;
             preconv = "yen";
             getinputUser("In which currency do you want to convert your balance ?\n1.\tdollar\n2.\teuro\n",&choice);
-            if(choice == 1){this->money.dollar = money * 0.0076; postconv = "dollar"; this->currency = dollar; showConversion(money, &(this->money.dollar),preconv,postconv);}
-            else if(choice == 2){this->money.euro = money * 0.0072; postconv = "euro"; this->currency = euro; showConversion(money, &(this->money.euro),preconv,postconv);}
+            if(choice == 1){this->customers[user].ownWallet.money.dollar = money * 0.0076; postconv = "dollar"; this->customers[user].ownWallet.currency = dollar; showConversion(money, &(this->customers[user].ownWallet.money.dollar),preconv,postconv);}
+            else if(choice == 2){this->customers[user].ownWallet.money.euro = money * 0.0072; postconv = "euro"; this->customers[user].ownWallet.currency = euro; showConversion(money, &(this->customers[user].ownWallet.money.euro),preconv,postconv);}
             break;
 
     }
 
 };
 
-void Wallet::showConversion(float& premoney, float* postmoney, std::string& preconv, std::string& postconv)
+void Bank::showConversion(float& premoney, float* postmoney, std::string& preconv, std::string& postconv)
  {std::cout << "Successful conversion of your " << premoney << " " << preconv << " in " << *postmoney << " " << postconv << "." << std::endl;};
 
-// People class methods
 
 People::People(){this->ownWallet.money.euro = 0; this->ownWallet.currency = euro;};
 
-void People::getName(){getinputUser("Please enter your firstname:\n", &(this->firstname));}
-void People::getPassword(){getinputUser("Please enter a password for your account:\n", &(this->password));}
-void People::getAge(){getinputUser("Please enter your age:\n", &(this->age));}
+void Bank::getName(int &user){getinputUser("Please enter your firstname:\n", &(this->customers[user].firstname));}
+void Bank::getPassword(int &user){getinputUser("Please enter a password for your account:\n", &(this->customers[user].password));}
+void Bank::getAge(int &user){getinputUser("Please enter your age:\n", &(this->customers[user].age));}
 
-int People::showAge(){return this->age;}
+int Bank::showAge(int &user){return this->customers[user].age;}

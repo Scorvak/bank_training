@@ -9,12 +9,14 @@
 int main()
 
 {
-    int choiceUser;
+    int choiceUser, idUser = 1;
 
-    People Person1, Person2;
-    People* pPerson[2] = {&Person1, &Person2};
+    Bank dataBank;
+    Bank* pdataBank;
 
-    showMenu(choiceUser,pPerson[0]);
+    pdataBank = &dataBank;
+
+    showMenu(idUser,choiceUser,pdataBank);
     return 0;
 }
 

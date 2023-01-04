@@ -13,8 +13,7 @@ const std::string currency[3] = {"euro","dollar","yen"};
 struct Balance {
     float expenses[10] = {0};
     float profits[10] = {0};
-    int nbexpenses = 0;
-    int nbprofits = 0;
+    const int sizeBalance = 10;
 };
 
 class Wallet {
@@ -32,32 +31,8 @@ union {
     } money;
 };
     public:
-
-// Asks user ow many times there will be a money input
-    void addDebit(int index);
-    void addCredit(int index);
-
-// Gets from the user the money input
-    void askDebit();
-    void askCredit();
-
-// Shows to the user how many inputs there are
-    int getDebit();
-    int getCredit();
-
-// Computes the total benefit and expense of the user money
-    void computeWallet();
-
-// Shows available money in the wallet
-    int showWallet();
-    int showCurrency();
-
-// Converts money in another currency
-    void convertCurrency();
-    void showConversion(float& premoney,float* postmoney, std::string& preconv, std::string& postconv);
-
-
-friend class People;
+    friend class People;
+    friend class Bank;
 
 };
 
@@ -70,11 +45,42 @@ private:
 public:
     Wallet ownWallet ; 
     People();
-    int showAge();
-    void getName();
-    void getAge();
-    void getPassword();
+    friend class Bank;
+
 };
 
+
+class Bank {
+
+private:
+    People customers[10];
+    enum Users {user1,user2,user3,user4,user5};
+    Users currentUser;
+public:
+
+    void getName(int &user);
+    void getAge(int &user);
+    void getPassword(int &user);
+
+    int showAge(int &user);
+
+// Gets from the user the money input
+    void getDebit(int& index, int& user);
+    void getCredit(int& index, int& user);
+
+// Computes the total benefit and expense of the user money
+    void computeWallet(int& user);
+
+// Shows available money in the wallet
+    int showWallet(int& user);
+    int showCurrency(int& user);
+
+// Converts money in another currency
+    void convertCurrency(int& user);
+    void showConversion(float& premoney,float* postmoney, std::string& preconv, std::string& postconv);
+
+
+
+};
 
 #endif

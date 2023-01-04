@@ -9,11 +9,8 @@
 #include "classes.h"
 
 
-void showMenu(int& choiceUser,People* account);
-
-void operationMenu(int& choiceUser, People* account);
-
-
+void showMenu(int& idUser,int& choiceUser,Bank* account);
+void operationMenu(int& idUser,int& choiceUser, Bank* account);
 
 
 #endif

@@ -53,9 +53,10 @@ public:
 class Bank {
 
 private:
-    People customers[10];
+    People customers[5];
     enum Users {user1,user2,user3,user4,user5};
     Users currentUser;
+    const int sizeUsers = 5;
 public:
 
     void getName(int &user);
@@ -63,6 +64,7 @@ public:
     void getPassword(int &user);
 
     int showAge(int &user);
+    std::string showName(int &user);
 
 // Gets from the user the money input
     void getDebit(int& index, int& user);
@@ -79,7 +81,9 @@ public:
     void convertCurrency(int& user);
     void showConversion(float& premoney,float* postmoney, std::string& preconv, std::string& postconv);
 
-
+// Checks user firstname and password for accessing account
+    bool checkUser();
+    bool checkPassword(int& checkUser);
 
 };
 

@@ -8,6 +8,14 @@ void getinputUser(const std::string& requestUser, std::string* choiceUser)
     std::stringstream(inputUser) >> *choiceUser; // stringstream allows a string-based object to be treated as a stream, thus the string can be converted into another object type.
 
 }
+void getinputUser(const std::string& requestUser, std::string& choiceUser)
+{
+    std::string inputUser;
+    std::cout << requestUser << std::endl;
+    getline(std::cin, inputUser); // getline in order to get user input even if there are blank space character
+    std::stringstream(inputUser) >> choiceUser; // stringstream allows a string-based object to be treated as a stream, thus the string can be converted into another object type.
+
+}
 void getinputUser(const std::string& requestUser, int* choiceUser)
 {
     std::string inputUser;

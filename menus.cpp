@@ -2,10 +2,13 @@
 
 void showMenu(int& idUser,int& choiceUser,Bank* account)
 {
+
+    bool accessUser;
     getinputUser("\t Welcome to Securrency Bank Inc.\t\n\nPlease select an option among the following ones:\n\n\t1. Open new account\n\t2. Manage account\n\t3. Close the program\n",choiceUser);
 
     switch(choiceUser)
     {
+
         case 1:
         std::cout << "In order to open your new account, you need to provide several personnal informations." << std::endl;
         
@@ -20,7 +23,9 @@ void showMenu(int& idUser,int& choiceUser,Bank* account)
             showMenu(idUser,choiceUser, account);}
         break;
         case 2:
-            operationMenu(idUser,choiceUser, account);
+            accessUser = account->checkUser();
+            if(accessUser){operationMenu(idUser,choiceUser, account);}
+            else{showMenu(idUser,choiceUser, account);}
         break;
         case 3:
         std::cout << "\nWe hope our services have brought satisfaction to your demands and to see you back soon.\n" << std::endl;

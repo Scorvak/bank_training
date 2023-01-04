@@ -74,6 +74,43 @@ void Bank::convertCurrency(int& user){
 void Bank::showConversion(float& premoney, float* postmoney, std::string& preconv, std::string& postconv)
  {std::cout << "Successful conversion of your " << premoney << " " << preconv << " in " << *postmoney << " " << postconv << "." << std::endl;};
 
+// Checks user firstname and password for accessing account
+bool Bank::checkUser(){
+
+    int userCheck;
+    std::string inputName;
+    bool existUser = false;
+    bool correctPassword = false;
+
+    getinputUser("Pleaser enter your firstname:\n",inputName);
+    for(int i = 0; i<this->sizeUsers; i++)
+    {
+        if(inputName == this->customers[i].firstname){bool existUser = true;userCheck = i;}
+
+    }
+    if(existUser)
+    {
+        correctPassword = checkPassword(userCheck);
+        return correctPassword;
+    }
+    else{
+        std::cout << "Sorry, we can't find your account with your name. Please retry again or open a new account through the main menu." << std::endl;
+        return false;
+    }
+
+};
+
+bool Bank::checkPassword(int& userCheck){
+
+    std::string password;
+    std::cout << "Hello " << showName(userCheck);getinputUser(", please enter your password:\n",password);
+
+    if(password == this->customers[userCheck].password)
+    {std::cout << "Sucessful access\n" << std::endl;return true;}
+    else{std::cout << "Failed access\n" << std::endl; return false;}
+
+};
+
 
 People::People(){this->ownWallet.money.euro = 0; this->ownWallet.currency = euro;};
 
@@ -82,3 +119,4 @@ void Bank::getPassword(int &user){getinputUser("Please enter a password for your
 void Bank::getAge(int &user){getinputUser("Please enter your age:\n", &(this->customers[user].age));}
 
 int Bank::showAge(int &user){return this->customers[user].age;}
+std::string Bank::showName(int &user){return this->customers[user].firstname;};

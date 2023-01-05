@@ -35,11 +35,9 @@ int Bank::showWallet(int& user){return this->customers[user].ownWallet.money.eur
 int Bank::showCurrency(int& user){return int(this->customers[user].ownWallet.currency);};
 
 // Converts money in another currency
-void Bank::convertCurrency(int& user){
+void Bank::convertCurrency(int& user, int& choice, std::string& preconv, std::string& postconv){
 
-    int choice;
     float money;
-    std::string preconv, postconv;
     
     switch(this->customers[user].ownWallet.currency)
     {
@@ -75,39 +73,28 @@ void Bank::showConversion(float& premoney, float* postmoney, std::string& precon
  {std::cout << "Successful conversion of your " << premoney << " " << preconv << " in " << *postmoney << " " << postconv << "." << std::endl;};
 
 // Checks user firstname and password for accessing account
-bool Bank::checkUser(){
-
-    int userCheck;
-    std::string inputName;
-    bool existUser = false;
-    bool correctPassword = false;
+bool Bank::checkUser(bool* access, int& userCheck, std::string& inputName, std::string& password){
 
     getinputUser("Pleaser enter your firstname:\n",inputName);
     for(int i = 0; i<this->sizeUsers; i++)
     {
-        if(inputName == this->customers[i].firstname){bool existUser = true;userCheck = i;}
+        if(inputName == this->customers[i].firstname){access[1] = true;userCheck = i;std::cout << "TEST" << std::endl;}
 
     }
-    if(existUser)
+    if(access[1])
     {
-        correctPassword = checkPassword(userCheck);
-        return correctPassword;
+
+    std::cout << "Hello " << showName(userCheck);getinputUser(", please enter your password:\n",password);
+
+    if(password == this->customers[userCheck].password){std::cout << "Sucessful access\n" << std::endl;access[2] =  true;}
+    else{std::cout << "Failed access\n" << std::endl; access[2] = false;}
+
+        return access[2];
     }
     else{
         std::cout << "Sorry, we can't find your account with your name. Please retry again or open a new account through the main menu." << std::endl;
         return false;
     }
-
-};
-
-bool Bank::checkPassword(int& userCheck){
-
-    std::string password;
-    std::cout << "Hello " << showName(userCheck);getinputUser(", please enter your password:\n",password);
-
-    if(password == this->customers[userCheck].password)
-    {std::cout << "Sucessful access\n" << std::endl;return true;}
-    else{std::cout << "Failed access\n" << std::endl; return false;}
 
 };
 

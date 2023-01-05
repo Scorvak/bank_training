@@ -9,8 +9,8 @@
 #include "classes.h"
 
 
-void showMenu(int& idUser,int& choiceUser,Bank* account);
-void operationMenu(int& idUser,int& choiceUser, Bank* account);
+void showMenu(Bank* account, bool* access, int* pintUser, std::string* pstringUser);
+void operationMenu(Bank* account, bool* access, int* pintUser, std::string* pstringUser);
 
 
 #endif

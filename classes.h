@@ -78,12 +78,11 @@ public:
     int showCurrency(int& user);
 
 // Converts money in another currency
-    void convertCurrency(int& user);
+    void convertCurrency(int& user, int& choice, std::string& preconv, std::string& postconv);
     void showConversion(float& premoney,float* postmoney, std::string& preconv, std::string& postconv);
 
 // Checks user firstname and password for accessing account
-    bool checkUser();
-    bool checkPassword(int& checkUser);
+    bool checkUser(bool* access, int& userCheck, std::string& inputName, std::string& password);
 
 };
 

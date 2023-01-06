@@ -16,13 +16,16 @@ void showMenu(Bank* account, bool* access, int* pintUser, float* pfloatUser, std
             std::cout << "Sorry, opening a new account is not available for minors. Please grow up, get a job and return to us when you'll be worth it dumbass.\n" << std::endl;
             break;
         }else{
+            account->checkSpot(access[3],pintUser[0], pintUser[5]);
+            if(access[3])
+            {
             account->resetProfits(pintUser[0]); account->resetExpenses(pintUser[0]);
             account->getName(pintUser[0]);account->getPassword(pintUser[0]);
             account->getCredit(pintUser[0],pintUser[3],pintUser[4], "To confirm your account opening, please make a first deposit of at least 50 euros",50);
             account->computeWallet(pintUser[0], pfloatUser[0], pfloatUser[1]);
-            std::cout << account->showWallet(pintUser[0]);
 
             std::cout << "\nGreat, your new account has been successfully opened. You can now consult it on the main menu.\n" << std::endl;
+            }
             showMenu(account,access, pintUser, pfloatUser, pstringUser);}
         break;
         case 2:

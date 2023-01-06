@@ -47,7 +47,7 @@ void Bank::computeWallet(int& user, float& profits, float& expenses){
     this->resetExpenses(user);
     this->resetProfits(user);
 
-    std::cout << "Total profits: " << profits << "\n" << "Total expenses: " << expenses << std::endl;
+    //std::cout << "Total profits: " << profits << "\n" << "Total expenses: " << expenses << std::endl;
     
     switch(this->customers[user].ownWallet.currency)
     {
@@ -126,9 +126,9 @@ void Bank::showConversion(float& premoney, float* postmoney, std::string& precon
 bool Bank::checkUser(bool* access, int& userCheck, std::string& inputName, std::string& password){
 
     getinputUser("Pleaser enter your firstname:\n",inputName);
-    for(int i = 0; i<this->sizeUsers; i++)
+    for(int i = 0; i < SIZE_CUSTOMERS; i++)
     {
-        if(inputName == this->customers[i].firstname){access[1] = true;userCheck = i;std::cout << "TEST" << std::endl;}
+        if(inputName == this->customers[i].firstname){access[1] = true;userCheck = i;}
 
     }
     if(access[1])
@@ -147,6 +147,24 @@ bool Bank::checkUser(bool* access, int& userCheck, std::string& inputName, std::
     }
 
 };
+
+void Bank::checkSpot(bool& access, int& user, int& userfree){
+
+    for(userfree = 0; userfree < SIZE_CUSTOMERS; userfree++)
+    {
+        std::cout <<  "adress of userfree loop:" << &userfree << std::endl; 
+
+        if(this->customers[userfree].firstname == "userfree"){user = userfree;access = true; break;}else{user = false;}
+        if(access == false){
+            std::cout << "There is no longer spot available to open an account in our bank. We're deeply sorry for our huge lack of competences. We'll commit sepuku right away..." << std::endl;
+            access = false;
+        }
+
+    }
+
+ };
+
+
 
 // Resets profits and expenses
     void Bank::resetProfits(int& user){

@@ -8,6 +8,7 @@
 #include "basics.h"
 
 #define SIZE_BALANCE 10
+#define SIZE_CUSTOMERS 5
 
 enum Currency {euro, dollar, yen};
 const std::string currency[3] = {"euro","dollar","yen"};
@@ -40,7 +41,7 @@ union {
 class People {
 
 private:
-    std::string firstname;
+    std::string firstname = "userfree";
     std::string password;
     int age;
 public:
@@ -54,10 +55,7 @@ public:
 class Bank {
 
 private:
-    People customers[5];
-    enum Users {user1,user2,user3,user4,user5};
-    Users currentUser;
-    const int sizeUsers = 5;
+    People customers[SIZE_CUSTOMERS];
 public:
 
     void getName(int &user);
@@ -85,6 +83,7 @@ public:
 
 // Checks user firstname and password for accessing account
     bool checkUser(bool* access, int& userCheck, std::string& inputName, std::string& password);
+    void checkSpot(bool& access, int& user, int& userfree);
 
 // Resets profits and expenses
     void resetProfits(int& user);

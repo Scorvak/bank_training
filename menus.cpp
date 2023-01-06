@@ -2,8 +2,6 @@
 
 void showMenu(Bank* account, bool* access, int* pintUser, float* pfloatUser, std::string* pstringUser)
 {
-
-    
     getinputUser("\n\tWelcome to Securrency Bank Inc.\t\n\nPlease select an option among the following ones:\n\n\t1. Open new account\n\t2. Manage account\n\t3. Close the program\n",pintUser[1]);
 
     switch(pintUser[1])
@@ -19,6 +17,11 @@ void showMenu(Bank* account, bool* access, int* pintUser, float* pfloatUser, std
             break;
         }else{
             account->getName(pintUser[0]);account->getPassword(pintUser[0]);
+            account->getCredit(pintUser[0],pintUser[3],pintUser[4], "To confirm your account opening, please make a first deposit of at least 50 euros",50);
+            account->computeWallet(pintUser[0], pfloatUser[0], pfloatUser[1]);
+
+//   void getCredit(int& index, int& user, int& tryUser, const std::string qUser,  const int& threshold);
+
             std::cout << "\nGreat, your new account has been successfully opened. You can now consult it one the main menu.\n" << std::endl;
             showMenu(account,access, pintUser, pfloatUser, pstringUser);}
         break;

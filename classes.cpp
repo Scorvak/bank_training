@@ -3,8 +3,30 @@
 // Wallet class methods 
 
 // Gets from the user the money input
-void Bank::getDebit(int& index, int& user){getinputUser("How much did it cost ?", &(this->customers[user].ownWallet.balance.expenses[index]));}; 
-void Bank::getCredit(int& index, int& user){getinputUser("How much did you get ?", &(this->customers[user].ownWallet.balance.profits[index]));};
+void Bank::getDebit(int& index, int& user, int& tryUser, const std::string qUser, const int& threshold){
+
+    if(tryUser == 0)
+    {
+        getinputUser(qUser,&(this->customers[user].ownWallet.balance.expenses[index]));
+        tryUser++;
+
+    }else if(tryUser >0 && this->customers[user].ownWallet.balance.expenses[index] < threshold)
+    {getDebit( index, user, tryUser, "Incorrect money amount, please retry:", threshold);}
+    
+}; 
+
+void Bank::getCredit(int& index, int& user, int& tryUser, const std::string qUser, const int& threshold){
+
+    if(tryUser == 0)
+    {
+        getinputUser(qUser,&(this->customers[user].ownWallet.balance.profits[index]));
+        tryUser++;
+
+    }else if(tryUser >0 && this->customers[user].ownWallet.balance.profits[index] < threshold)
+    {getCredit( index, user, tryUser, "Incorrect money amount, please retry:", threshold);}
+    
+ };
+
 
 // Computes the total benefit and expense of the user money
 void Bank::computeWallet(int& user, float& profits, float& expenses){
@@ -12,6 +34,10 @@ void Bank::computeWallet(int& user, float& profits, float& expenses){
     profits = sumArray(this->customers[user].ownWallet.balance.profits,this->customers[user].ownWallet.balance.sizeBalance);
     expenses = sumArray(this->customers[user].ownWallet.balance.expenses,this->customers[user].ownWallet.balance.sizeBalance);
     
+    std::fill(this->customers[user].ownWallet.balance.profits, this->customers[user].ownWallet.balance.profits+this->customers[user].ownWallet.balance.sizeBalance, 0);
+    std::fill(this->customers[user].ownWallet.balance.expenses, this->customers[user].ownWallet.balance.expenses+this->customers[user].ownWallet.balance.sizeBalance, 0);
+
+
     std::cout << "Total profits: " << profits << "\n" << "Total expenses:" << expenses << std::endl;
     
     switch(this->customers[user].ownWallet.currency)
@@ -27,6 +53,24 @@ void Bank::computeWallet(int& user, float& profits, float& expenses){
         break;
 
     }
+};
+
+void Bank::resetWallet(int& user){
+
+ switch(this->customers[user].ownWallet.currency)
+    {
+        case euro:
+        this->customers[user].ownWallet.money.euro = 0;
+        break;
+        case dollar:
+        this->customers[user].ownWallet.money.dollar = 0;
+        break;
+        case yen:
+        this->customers[user].ownWallet.money.yen = 0;
+        break;
+
+    }
+
 };
 
 // Shows available money in the wallet

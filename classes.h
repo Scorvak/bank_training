@@ -7,13 +7,14 @@
 #include <math.h>
 #include "basics.h"
 
+#define SIZE_BALANCE 10
+
 enum Currency {euro, dollar, yen};
 const std::string currency[3] = {"euro","dollar","yen"};
 
 struct Balance {
-    float expenses[10] = {0};
-    float profits[10] = {0};
-    const int sizeBalance = 10;
+    float expenses[SIZE_BALANCE];
+    float profits[SIZE_BALANCE];
 };
 
 class Wallet {
@@ -67,8 +68,8 @@ public:
     std::string showName(int &user);
 
 // Gets from the user the money input
-    void getDebit(int& index, int& user, int& tryUser, const std::string qUser,  const int& threshold);
-    void getCredit(int& index, int& user, int& tryUser, const std::string qUser,  const int& threshold);
+    void getDebit(int& index, int& user, int& tryUser, const std::string qUser, const int& threshold);
+    void getCredit(int& index, int& user, int& tryUser, const std::string qUser, const int& threshold);
 
 // Computes the total benefit and expense of the user money
     void computeWallet(int& user, float& profits, float& expenses);
@@ -84,6 +85,10 @@ public:
 
 // Checks user firstname and password for accessing account
     bool checkUser(bool* access, int& userCheck, std::string& inputName, std::string& password);
+
+// Resets profits and expenses
+    void resetProfits(int& user);
+    void resetExpenses(int& user);
 
 };
 

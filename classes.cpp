@@ -9,9 +9,13 @@ void Bank::getDebit(int& index, int& user, int& tryUser, const std::string qUser
     {
         getinputUser(qUser,&(this->customers[user].ownWallet.balance.expenses[index]));
         tryUser++;
+        getDebit(index, user, tryUser, "Incorrect money amount, please retry:", threshold);
 
-    }else if(tryUser >0 && this->customers[user].ownWallet.balance.expenses[index] < threshold)
-    {getDebit( index, user, tryUser, "Incorrect money amount, please retry:", threshold);}
+    }else if(tryUser > 0 && this->customers[user].ownWallet.balance.expenses[index] < threshold)
+    {
+        getinputUser("Incorrect money amount, please retry:",&(this->customers[user].ownWallet.balance.expenses[index]));
+        getDebit(index, user, tryUser, "Incorrect money amount, please retry:", threshold);
+    }
     
 }; 
 
@@ -21,24 +25,29 @@ void Bank::getCredit(int& index, int& user, int& tryUser, const std::string qUse
     {
         getinputUser(qUser,&(this->customers[user].ownWallet.balance.profits[index]));
         tryUser++;
+        getCredit( index, user, tryUser, "Incorrect money amount, please retry:", threshold);
 
     }else if(tryUser >0 && this->customers[user].ownWallet.balance.profits[index] < threshold)
-    {getCredit( index, user, tryUser, "Incorrect money amount, please retry:", threshold);}
-    
+    {
+        getinputUser("Incorrect money amount, please retry:", &(this->customers[user].ownWallet.balance.profits[index]));
+        tryUser++;
+        getCredit( index, user, tryUser, "Incorrect money amount, please retry:", threshold);  
+        }
+    else{
+        tryUser = 0;
+    }
  };
-
 
 // Computes the total benefit and expense of the user money
 void Bank::computeWallet(int& user, float& profits, float& expenses){
 
-    profits = sumArray(this->customers[user].ownWallet.balance.profits,this->customers[user].ownWallet.balance.sizeBalance);
-    expenses = sumArray(this->customers[user].ownWallet.balance.expenses,this->customers[user].ownWallet.balance.sizeBalance);
-    
-    std::fill(this->customers[user].ownWallet.balance.profits, this->customers[user].ownWallet.balance.profits+this->customers[user].ownWallet.balance.sizeBalance, 0);
-    std::fill(this->customers[user].ownWallet.balance.expenses, this->customers[user].ownWallet.balance.expenses+this->customers[user].ownWallet.balance.sizeBalance, 0);
+    profits = sumArray(this->customers[user].ownWallet.balance.profits,SIZE_BALANCE);
+    expenses = sumArray(this->customers[user].ownWallet.balance.expenses,SIZE_BALANCE);
 
+    this->resetExpenses(user);
+    this->resetProfits(user);
 
-    std::cout << "Total profits: " << profits << "\n" << "Total expenses:" << expenses << std::endl;
+    std::cout << "Total profits: " << profits << "\n" << "Total expenses: " << expenses << std::endl;
     
     switch(this->customers[user].ownWallet.currency)
     {
@@ -138,6 +147,17 @@ bool Bank::checkUser(bool* access, int& userCheck, std::string& inputName, std::
     }
 
 };
+
+// Resets profits and expenses
+    void Bank::resetProfits(int& user){
+
+        std::fill(this->customers[user].ownWallet.balance.profits, this->customers[user].ownWallet.balance.profits + SIZE_BALANCE,0.0f);
+
+    };
+    void Bank::resetExpenses(int& user){
+
+        std::fill(this->customers[user].ownWallet.balance.expenses, this->customers[user].ownWallet.balance.expenses + SIZE_BALANCE,0.0f);
+    };
 
 
 People::People(){this->ownWallet.money.euro = 0; this->ownWallet.currency = euro;};

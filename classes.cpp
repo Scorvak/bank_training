@@ -7,15 +7,14 @@ void Bank::getDebit(int& index, int& user){getinputUser("How much did it cost ?"
 void Bank::getCredit(int& index, int& user){getinputUser("How much did you get ?", &(this->customers[user].ownWallet.balance.profits[index]));};
 
 // Computes the total benefit and expense of the user money
-void Bank::computeWallet(int& user){
+void Bank::computeWallet(int& user, float& profits, float& expenses){
 
-    Currency currency = this->customers[user].ownWallet.currency;
-    float profits = sumArray(this->customers[user].ownWallet.balance.profits,this->customers[user].ownWallet.balance.sizeBalance);
-    float expenses = sumArray(this->customers[user].ownWallet.balance.expenses,this->customers[user].ownWallet.balance.sizeBalance);
+    profits = sumArray(this->customers[user].ownWallet.balance.profits,this->customers[user].ownWallet.balance.sizeBalance);
+    expenses = sumArray(this->customers[user].ownWallet.balance.expenses,this->customers[user].ownWallet.balance.sizeBalance);
     
     std::cout << "Total profits: " << profits << "\n" << "Total expenses:" << expenses << std::endl;
     
-    switch(currency)
+    switch(this->customers[user].ownWallet.currency)
     {
         case euro:
         this->customers[user].ownWallet.money.euro = this->customers[user].ownWallet.money.euro + profits - expenses;
@@ -35,10 +34,8 @@ int Bank::showWallet(int& user){return this->customers[user].ownWallet.money.eur
 int Bank::showCurrency(int& user){return int(this->customers[user].ownWallet.currency);};
 
 // Converts money in another currency
-void Bank::convertCurrency(int& user, int& choice, std::string& preconv, std::string& postconv){
+void Bank::convertCurrency(int& user, int& choice, float& money, std::string& preconv, std::string& postconv){
 
-    float money;
-    
     switch(this->customers[user].ownWallet.currency)
     {
         case Currency::dollar:

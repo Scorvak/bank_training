@@ -71,14 +71,14 @@ public:
     void getCredit(int& index, int& user);
 
 // Computes the total benefit and expense of the user money
-    void computeWallet(int& user);
+    void computeWallet(int& user, float& profits, float& expenses);
 
 // Shows available money in the wallet
     int showWallet(int& user);
     int showCurrency(int& user);
 
 // Converts money in another currency
-    void convertCurrency(int& user, int& choice, std::string& preconv, std::string& postconv);
+    void convertCurrency(int& user, int& choice, float& money, std::string& preconv, std::string& postconv);
     void showConversion(float& premoney,float* postmoney, std::string& preconv, std::string& postconv);
 
 // Checks user firstname and password for accessing account

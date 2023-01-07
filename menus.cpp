@@ -34,8 +34,8 @@ void showMenu(Bank* account, bool* access, int* pintUser, float* pfloatUser, std
         break;
 
         case 2:
-            access[0] = account->checkUser(access,pintUser[0], pintUser[4], pstringUser[2],pstringUser[3]);
-            if(access[0]){operationMenu(account, access, pintUser, pfloatUser, pstringUser);}
+            access[0] = account->checkUser(access, pintUser[0], pintUser[4], pstringUser[2], pstringUser[3]);
+            if(access[0]){accountMenu(account, access, pintUser, pfloatUser, pstringUser);}
             else{showMenu(account, access, pintUser, pfloatUser, pstringUser);}
         break;
         case 3:
@@ -50,22 +50,23 @@ void showMenu(Bank* account, bool* access, int* pintUser, float* pfloatUser, std
 };
 
 
-void operationMenu(Bank* account, bool* access, int* pintUser, float* pfloatUser, std::string* pstringUser)
+void accountMenu(Bank* account, bool* access, int* pintUser, float* pfloatUser, std::string* pstringUser)
 {
         getinputUser("Please choose a bank operation on your account:\n\n\t1. Consult your account balance\n\t2. Add funds or make a transfer order to another account\n\t3. Convert your currency balance\n\t4. Return to the main menu\n",pintUser[1]);
         switch(pintUser[1])
         {
             case 1:
                 std::cout << "Your balance account is now at " << account->showWallet(pintUser[0], pfloatUser[2]) << " " << currency[account->showCurrency(pintUser[0])]<< "\n" << std::endl;
-                 operationMenu(account, access, pintUser, pfloatUser, pstringUser);
+                 accountMenu(account, access, pintUser, pfloatUser, pstringUser);
                  break;
             case 2:
                 std::cout << "Ongoing development...\n\n";
                 operationMenu(account, access, pintUser, pfloatUser, pstringUser);
+                accountMenu(account, access, pintUser, pfloatUser, pstringUser);
                 break;
             case 3:
-                account->convertCurrency(pintUser[0],pintUser[1], pfloatUser[2],pstringUser[0], pstringUser[1]);
-                operationMenu(account, access, pintUser, pfloatUser, pstringUser);
+                account->convertCurrency(pintUser[0], pintUser[1], pfloatUser[2], pstringUser[0], pstringUser[1]);
+                accountMenu(account, access, pintUser, pfloatUser, pstringUser);
                 break;
             case 4:
                 access[0] = false;
@@ -73,9 +74,40 @@ void operationMenu(Bank* account, bool* access, int* pintUser, float* pfloatUser
                 break;
             default:
                  std::cout << "Please reconsider your choice, which is invalid from our available operations..." << std::endl;
-                 operationMenu(account, access, pintUser, pfloatUser, pstringUser);
+                 accountMenu(account, access, pintUser, pfloatUser, pstringUser);
                  break;
 
         }
 
 }
+
+void operationMenu(Bank* account, bool* access, int* pintUser, float* pfloatUser, std::string* pstringUser){
+
+    getinputUser("Please choose which operation you want to do:\n\n\t1. Make deposit\n\t2. Transfer money to another account\n\t3. Join account with your partner\n\t4. Return to previous menu",pintUser[1]);
+
+    switch(pintUser[1])
+    {
+        case 1:
+        //account->repeatOperation(pintUser[0], pintUser[2], pintUser[3], pintUser[4], pstringUser[0], "How much money do you want to deposit ?", 0 , getCredit());
+ 
+        //account->getCredit(pintUser[0],pintUser[2],pintUser[3], "To confirm your account opening, please make a first deposit of at least 50 euros",50);      
+        break;
+
+        case 2:
+
+        break;
+
+        case 3:
+
+        break;
+
+        case 4:
+        accountMenu(account, access, pintUser, pfloatUser, pstringUser);
+        break;
+
+
+    }
+
+
+};
+

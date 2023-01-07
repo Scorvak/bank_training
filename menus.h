@@ -10,7 +10,7 @@
 
 
 void showMenu(Bank* account, bool* access, int* pintUser, float* pfloatUser, std::string* pstringUser);
+void accountMenu(Bank* account, bool* access, int* pintUser, float* pfloatUser, std::string* pstringUser);
 void operationMenu(Bank* account, bool* access, int* pintUser, float* pfloatUser, std::string* pstringUser);
-
 
 #endif

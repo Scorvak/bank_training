@@ -36,6 +36,25 @@ void Bank::getCredit(int& user, int& index, int& tryUser, const std::string qUse
     }else if(tryUser > 0 && this->customers[user].ownWallet.balance.profits[index] >= threshold){tryUser = 0;}
  };
 
+// Repeats operations for user
+
+/*
+
+ void Bank::repeatOperation(int& user, int& index, int& tryUser, int& iniLoop, std::string stringUser, const std::string qUser, const int& threshold, void (Bank::*function)(int&,int&,int&,const std::string, const int&))
+ {
+    do{
+
+        this->*function(user, index, tryUser, qUser, threshold);
+
+        getinputUser("Do you want to add one more operation ?", stringUser);
+
+    }while(stringUser != "yes" && stringUser != "Yes");
+ };
+
+*/
+
+
+
 // Computes the total benefit and expense of the user money
 void Bank::computeWallet(int& user, float& profits, float& expenses){
 
@@ -106,7 +125,8 @@ void Bank::convertCurrency(int& user, int& choice, float& money, std::string& pr
     switch(this->customers[user].ownWallet.currency)
     {
         case Currency::dollar:
-            money = this->customers[user].ownWallet.money.dollar;
+            money = this->customers[user].ownWallet.money.dollar ;
+            money -= money*RATE_CONVERSION;
             preconv = "dollar";
             getinputUser("In which currency do you want to convert your balance ?\n1.\teuro\n2.\tyen\n",&choice);
             if(choice == 1){
@@ -121,6 +141,7 @@ void Bank::convertCurrency(int& user, int& choice, float& money, std::string& pr
 
         case Currency::euro:
             money = this->customers[user].ownWallet.money.euro;
+            money -= money*RATE_CONVERSION;
             preconv = "euro";
             getinputUser("In which currency do you want to convert your balance ?\n1.\tdollar\n2.\tyen\n",&choice);
             if(choice == 1){
@@ -135,6 +156,7 @@ void Bank::convertCurrency(int& user, int& choice, float& money, std::string& pr
 
         case Currency::yen:
             money = this->customers[user].ownWallet.money.yen;
+            money -= money*RATE_CONVERSION;
             preconv = "yen";
             getinputUser("In which currency do you want to convert your balance ?\n1.\tdollar\n2.\teuro\n",&choice);
             if(choice == 1){

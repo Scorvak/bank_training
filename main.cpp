@@ -12,14 +12,15 @@
 int main()
 
 {
-
-    int choiceUser, idUser = 1;
-
+    Bank dataBank;
+    Bank* pdataBank;
 
     bool* paccessUser;
     int* pintUser;
     float* pfloatUser;
     std::string* pstringUser;
+    //void (*pfunUser)(int&,int&,int&,const std::string, const int&);
+
 
 
 
@@ -31,8 +32,7 @@ int main()
     std::fill(pintUser,pintUser+SIZE_PINT,0);
     std::fill(pfloatUser,pfloatUser+SIZE_PFLOAT,0);
 
-    Bank dataBank;
-    Bank* pdataBank;
+
 
     pdataBank = &dataBank;
 

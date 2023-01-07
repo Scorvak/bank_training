@@ -9,6 +9,7 @@
 
 #define SIZE_BALANCE 10
 #define SIZE_CUSTOMERS 5
+#define RATE_CONVERSION 0.025
 
 enum Currency {euro, dollar, yen};
 const std::string currency[3] = {"euro","dollar","yen"};
@@ -88,6 +89,10 @@ public:
 // Resets profits and expenses
     void resetProfits(int& user);
     void resetExpenses(int& user);
+
+// Repeats operation 
+//    void repeatOperation(int& user, int& index, int& tryUser, int& iniLoop, std::string stringUser, const std::string qUser, const int& threshold, void (Bank::*function)(int&,int&,int&,const std::string, const int&));
+
 
 };
 

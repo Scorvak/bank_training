@@ -66,15 +66,15 @@ public:
     std::string showName(int &user);
 
 // Gets from the user the money input
-    void getDebit(int& index, int& user, int& tryUser, const std::string qUser, const int& threshold);
-    void getCredit(int& index, int& user, int& tryUser, const std::string qUser, const int& threshold);
+    void getDebit(int& user, int& index, int& tryUser, const std::string qUser, const int& threshold);
+    void getCredit(int& user, int& index, int& tryUser, const std::string qUser, const int& threshold);
 
 // Computes the total benefit and expense of the user money
     void computeWallet(int& user, float& profits, float& expenses);
     void resetWallet(int& user);
 
 // Shows available money in the wallet
-    int showWallet(int& user);
+    float showWallet(int& user, float& money);
     int showCurrency(int& user);
 
 // Converts money in another currency
@@ -82,7 +82,7 @@ public:
     void showConversion(float& premoney,float* postmoney, std::string& preconv, std::string& postconv);
 
 // Checks user firstname and password for accessing account
-    bool checkUser(bool* access, int& userCheck, std::string& inputName, std::string& password);
+    bool checkUser(bool* access, int& userCheck, int& userspot, std::string& inputName, std::string& password);
     void checkSpot(bool& access, int& user, int& userfree);
 
 // Resets profits and expenses

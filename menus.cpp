@@ -8,28 +8,33 @@ void showMenu(Bank* account, bool* access, int* pintUser, float* pfloatUser, std
     {
 
         case 1:
-        std::cout << "In order to open your new account, you need to provide several personnal informations." << std::endl;
-        
-        account->getAge(pintUser[0]);
-        if(account->showAge(pintUser[0]) < 18)
+        account->checkSpot(access[3],pintUser[0], pintUser[4]);
+        if(access[3])
         {
-            std::cout << "Sorry, opening a new account is not available for minors. Please grow up, get a job and return to us when you'll be worth it dumbass.\n" << std::endl;
-            break;
-        }else{
-            account->checkSpot(access[3],pintUser[0], pintUser[5]);
-            if(access[3])
+            std::cout << "In order to open your new account, you need to provide several personnal informations." << std::endl;
+            account->getAge(pintUser[0]);
+
+            if(account->showAge(pintUser[0]) < 18)
             {
+            std::cout << "Sorry, opening a new account is not available for minors. Please grow up, get a job and return to us when you'll be worth it dumbass.\n" << std::endl;
+            }else{
+
             account->resetProfits(pintUser[0]); account->resetExpenses(pintUser[0]);
             account->getName(pintUser[0]);account->getPassword(pintUser[0]);
-            account->getCredit(pintUser[0],pintUser[3],pintUser[4], "To confirm your account opening, please make a first deposit of at least 50 euros",50);
+            pintUser[2] = 0;pintUser[3] = 0; 
+            account->getCredit(pintUser[0],pintUser[2],pintUser[3], "To confirm your account opening, please make a first deposit of at least 50 euros",50);
             account->computeWallet(pintUser[0], pfloatUser[0], pfloatUser[1]);
 
             std::cout << "\nGreat, your new account has been successfully opened. You can now consult it on the main menu.\n" << std::endl;
+
             }
-            showMenu(account,access, pintUser, pfloatUser, pstringUser);}
+
+        }
+        showMenu(account,access, pintUser, pfloatUser, pstringUser);
         break;
+
         case 2:
-            access[0] = account->checkUser(access,pintUser[2],pstringUser[2],pstringUser[3]);
+            access[0] = account->checkUser(access,pintUser[0], pintUser[4], pstringUser[2],pstringUser[3]);
             if(access[0]){operationMenu(account, access, pintUser, pfloatUser, pstringUser);}
             else{showMenu(account, access, pintUser, pfloatUser, pstringUser);}
         break;
@@ -51,7 +56,7 @@ void operationMenu(Bank* account, bool* access, int* pintUser, float* pfloatUser
         switch(pintUser[1])
         {
             case 1:
-                std::cout << "Your balance account is now at " << account->showWallet(pintUser[0]) << " " << currency[account->showCurrency(pintUser[0])]<< "\n" << std::endl;
+                std::cout << "Your balance account is now at " << account->showWallet(pintUser[0], pfloatUser[2]) << " " << currency[account->showCurrency(pintUser[0])]<< "\n" << std::endl;
                  operationMenu(account, access, pintUser, pfloatUser, pstringUser);
                  break;
             case 2:

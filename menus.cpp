@@ -88,17 +88,17 @@ void operationMenu(Bank* account, bool* access, int* pintUser, float* pfloatUser
     switch(pintUser[1])
     {
         case 1:
-        //account->repeatOperation(pintUser[0], pintUser[2], pintUser[3], pintUser[4], pstringUser[0], "How much money do you want to deposit ?", 0 , getCredit());
- 
-        //account->getCredit(pintUser[0],pintUser[2],pintUser[3], "To confirm your account opening, please make a first deposit of at least 50 euros",50);      
+        account->repeatOperation(pintUser[0], pintUser[2], pintUser[3], pintUser[4], pstringUser[0], "How much money do you want to deposit ?", 0 , &Bank::getCredit);
+        account->computeWallet(pintUser[0], pfloatUser[0], pfloatUser[1]);
+        operationMenu(account, access, pintUser, pfloatUser, pstringUser);
         break;
 
         case 2:
-
+        operationMenu(account, access, pintUser, pfloatUser, pstringUser);
         break;
 
         case 3:
-
+        operationMenu(account, access, pintUser, pfloatUser, pstringUser);
         break;
 
         case 4:

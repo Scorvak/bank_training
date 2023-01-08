@@ -38,20 +38,24 @@ void Bank::getCredit(int& user, int& index, int& tryUser, const std::string qUse
 
 // Repeats operations for user
 
-/*
+
 
  void Bank::repeatOperation(int& user, int& index, int& tryUser, int& iniLoop, std::string stringUser, const std::string qUser, const int& threshold, void (Bank::*function)(int&,int&,int&,const std::string, const int&))
  {
+    index = 0;
+    tryUser = 0;
+    iniLoop = 0;
+
     do{
 
-        this->*function(user, index, tryUser, qUser, threshold);
-
+        (this->*function)(user, index, tryUser, qUser, threshold);
         getinputUser("Do you want to add one more operation ?", stringUser);
+        if(stringUser == "yes" || stringUser == "Yes"){iniLoop++; index++; tryUser = 0;}
 
-    }while(stringUser != "yes" && stringUser != "Yes");
+    }while(stringUser == "yes" || stringUser == "Yes" && iniLoop < SIZE_BALANCE);
+
  };
 
-*/
 
 
 

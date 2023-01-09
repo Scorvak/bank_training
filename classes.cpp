@@ -3,7 +3,7 @@
 // Wallet class methods 
 
 // Gets from the user the money input
-void Bank::getDebit(int& user, int& index, int& tryUser, const std::string qUser, const int& threshold){
+void Bank::getDebit(int& user, int& index, int& tryUser, const std::string& qUser, const int& threshold){
 
     if(tryUser == 0)
     {
@@ -20,7 +20,7 @@ void Bank::getDebit(int& user, int& index, int& tryUser, const std::string qUser
 
 }; 
 
-void Bank::getCredit(int& user, int& index, int& tryUser, const std::string qUser, const int& threshold){
+void Bank::getCredit(int& user, int& index, int& tryUser, const std::string& qUser, const int& threshold){
 
     if(tryUser == 0)
     {
@@ -40,7 +40,7 @@ void Bank::getCredit(int& user, int& index, int& tryUser, const std::string qUse
 
 
 
- void Bank::repeatOperation(int& user, int& index, int& tryUser, int& iniLoop, std::string stringUser, const std::string qUser, const int& threshold, void (Bank::*function)(int&,int&,int&,const std::string, const int&))
+ void Bank::repeatOperation(int& user, int& index, int& tryUser, int& iniLoop, std::string& stringUser, const std::string& qUser, const int& threshold, void (Bank::*function)(int&,int&,int&,const std::string&, const int&))
  {
     index = 0;
     tryUser = 0;
@@ -181,10 +181,10 @@ void Bank::showConversion(float& premoney, float* postmoney, std::string& precon
  {std::cout << "Successful conversion of your " << premoney << " " << preconv << " in " << *postmoney << " " << postconv << "." << std::endl;};
 
 // Checks user firstname and password for accessing account
-bool Bank::checkUser(bool* access, int& userCheck, int& userspot, std::string& inputName, std::string& password){
+bool Bank::checkUser(bool* access, int& userCheck, int& userspot, std::string& inputName, std::string& password, const std::string& qUser){
 
     access[1] = false;
-    getinputUser("Pleaser enter your firstname:\n",inputName);
+    getinputUser(qUser,inputName);
 
     for(int userspot = 0; userspot < SIZE_CUSTOMERS; userspot++)
     {
@@ -194,7 +194,7 @@ bool Bank::checkUser(bool* access, int& userCheck, int& userspot, std::string& i
     if(access[1])
     {
 
-    std::cout << "Hello " << showName(userCheck);getinputUser(", please enter your password:\n",password);
+    std::cout << "Dear " << showName(userCheck);getinputUser(", please enter your password:\n",password);
 
     if(password == this->customers[userCheck].password){std::cout << "Sucessful access\n" << std::endl;access[2] =  true;}
     else{std::cout << "Failed access\n" << std::endl; access[2] = false;}
@@ -202,23 +202,32 @@ bool Bank::checkUser(bool* access, int& userCheck, int& userspot, std::string& i
         return access[2];
     }
     else{
-        std::cout << "Sorry, we can't find your account with your name. Please retry again or open a new account through the main menu." << std::endl;
+        std::cout << "Sorry, we can't find this account with this name. Please retry again or open a new account through the main menu." << std::endl;
         return false;
     }
 };
 
-void Bank::checkSpot(bool& access, int& user, int& userfree){
+void Bank::checkSpot(bool& access, int& user, int& userfree, const std::string& rUser){
 
     for(userfree = 0; userfree < SIZE_CUSTOMERS; userfree++)
     {
-        if(this->customers[userfree].firstname == "userfree"){user = userfree; access = true; break;}else{user = false;}
-        if(access == false){
-            std::cout << "There is no longer spot available to open an account in our bank. We're deeply sorry for our huge lack of competences. We'll commit sepuku right away..." << std::endl;
-            access = false;
+        if(this->customers[userfree].firstname == "userfree"){ user = userfree; access = true; break;}else{access = false;}
+        if(access == false && userfree == (SIZE_CUSTOMERS-1)){
+            std::cout << rUser << std::endl;
         }
     }
  };
 
+void Bank::checkFriend(bool& access, int& user, int& userfree, const std::string& rUser){
+
+    for(userfree = 0; userfree < SIZE_FRIENDS; userfree++)
+    {
+        if(this->customers[user].friends[userfree] == "userfree"){; access = true; break;}else{access = false;}
+        if(access == false && userfree == (SIZE_FRIENDS-1)){
+            std::cout << rUser << std::endl;
+        }
+    }
+ };
 
 
 // Resets profits and expenses
@@ -238,6 +247,27 @@ People::People(){this->ownWallet.money.euro = 0; this->ownWallet.currency = euro
 void Bank::getName(int &user){getinputUser("Please enter your firstname:\n", &(this->customers[user].firstname));}
 void Bank::getPassword(int &user){getinputUser("Please enter a password for your account:\n", &(this->customers[user].password));}
 void Bank::getAge(int &user){getinputUser("Please enter your age:\n", &(this->customers[user].age));}
+
+void Bank::resetFriends(int& user, int& iniFriend){for(iniFriend = 0; iniFriend < SIZE_FRIENDS;iniFriend++){this->customers[user].friends[iniFriend] = "userfree";}};
+void Bank::addFriend(int& user, int& friendspot, std::string& friendname){
+
+    getinputUser("What is the name of your friend ?\n",friendname);
+    this->customers[user].friends[friendspot] = friendname;
+};
+
+void Bank::showFriends(int& user, int& friendspot, int& friendnum ,std::string& friendname){
+
+friendnum = 1;
+
+    for(friendspot = 0; friendspot < SIZE_FRIENDS; friendspot++)
+    {
+        if(this->customers[user].friends[friendspot] != "userfree")
+        {friendname = this->customers[user].friends[friendspot]; std::cout << "\t" << friendnum << ". "<<friendname << std::endl; friendnum++;}
+
+    }
+};
+
+
 
 int Bank::showAge(int &user){return this->customers[user].age;}
 std::string Bank::showName(int &user){return this->customers[user].firstname;};

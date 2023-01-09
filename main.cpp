@@ -25,7 +25,7 @@ int main()
 
 
     paccessUser = new bool [4]; // 0 = authorization access to user's account; 1 = user firstname validation; 2 = user password validation; 3 = spot availabilty 
-    pintUser = new int [SIZE_PINT]; // 0 = user bank ID number; 1 =  user choice selection; 2 = index bank ID number balance; 3 = try count for bank operation; 4 = int loop for availibilty checking
+    pintUser = new int [SIZE_PINT]; // 0 = user bank ID number; 1 =  user choice selection; 2 = index bank ID number balance; 3 = try count for bank operation; 4 = init loop for availibilty checking
     pfloatUser = new float [SIZE_PFLOAT]; // 0 = profits; 1 = expenses; 2 = money
     pstringUser = new std::string [4]; // 0 = pre conversion currency; 1 = post conversion currency; 2 = firstname user; 3 = password user
 

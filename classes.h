@@ -8,7 +8,8 @@
 #include "basics.h"
 
 #define SIZE_BALANCE 10
-#define SIZE_CUSTOMERS 5
+#define SIZE_FRIENDS 5
+#define SIZE_CUSTOMERS 10
 #define RATE_CONVERSION 0.025
 
 enum Currency {euro, dollar, yen};
@@ -44,6 +45,7 @@ class People {
 private:
     std::string firstname = "userfree";
     std::string password;
+    std::string friends [SIZE_FRIENDS];
     int age;
 public:
     Wallet ownWallet ; 
@@ -67,8 +69,8 @@ public:
     std::string showName(int &user);
 
 // Gets from the user the money input
-    void getDebit(int& user, int& index, int& tryUser, const std::string qUser, const int& threshold);
-    void getCredit(int& user, int& index, int& tryUser, const std::string qUser, const int& threshold);
+    void getDebit(int& user, int& index, int& tryUser, const std::string& qUser, const int& threshold);
+    void getCredit(int& user, int& index, int& tryUser, const std::string& qUser, const int& threshold);
 
 // Computes the total benefit and expense of the user money
     void computeWallet(int& user, float& profits, float& expenses);
@@ -80,18 +82,25 @@ public:
 
 // Converts money in another currency
     void convertCurrency(int& user, int& choice, float& money, std::string& preconv, std::string& postconv);
-    void showConversion(float& premoney,float* postmoney, std::string& preconv, std::string& postconv);
+    void showConversion(float& premoney, float* postmoney, std::string& preconv, std::string& postconv);
 
 // Checks user firstname and password for accessing account
-    bool checkUser(bool* access, int& userCheck, int& userspot, std::string& inputName, std::string& password);
-    void checkSpot(bool& access, int& user, int& userfree);
+    bool checkUser(bool* access, int& userCheck, int& userspot, std::string& inputName, std::string& password, const std::string& qUser);
+    void checkSpot(bool& access, int& user, int& userfree, const std::string& rUser);
+    void checkFriend(bool& access, int& user, int& userfree, const std::string& rUser);
 
 // Resets profits and expenses
     void resetProfits(int& user);
     void resetExpenses(int& user);
 
 // Repeats operation 
-    void repeatOperation(int& user, int& index, int& tryUser, int& iniLoop, std::string stringUser, const std::string qUser, const int& threshold, void (Bank::*function)(int&,int&,int&,const std::string, const int&));
+    void repeatOperation(int& user, int& index, int& tryUser, int& iniLoop, std::string& stringUser, const std::string& qUser, const int& threshold, void (Bank::*function)(int&,int&,int&,const std::string&, const int&));
+
+// Methods related to customer's friends
+    void resetFriends(int& user, int& iniFriend);
+    void addFriend(int& user, int& friendspot, std::string& friendname);
+    void showFriends(int& user, int& friendspot, int& friendnum, std::string& friendname);
+
 
 
 };

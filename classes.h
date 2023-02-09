@@ -69,8 +69,8 @@ public:
     std::string showName(int &user);
 
 // Gets from the user the money input
-    void getDebit(int& user, int& index, int& tryUser, const std::string& qUser, const int& threshold);
-    void getCredit(int& user, int& index, int& tryUser, const std::string& qUser, const int& threshold);
+    void getDebit(int& user, int& index, int& tryUser, const std::string& qUser, std::string& inputUser, const int& threshold);
+    void getCredit(int& user, int& index, int& tryUser, const std::string& qUser, std::string& inputUser, const int& threshold);
 
 // Computes the total benefit and expense of the user money
     void computeWallet(int& user, float& profits, float& expenses);

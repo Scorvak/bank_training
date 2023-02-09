@@ -3,36 +3,36 @@
 // Wallet class methods 
 
 // Gets from the user the money input
-void Bank::getDebit(int& user, int& index, int& tryUser, const std::string& qUser, const int& threshold){
+void Bank::getDebit(int& user, int& index, int& tryUser, const std::string& qUser, std::string& inputUser, const int& threshold){
 
     if(tryUser == 0)
     {
-        getinputUser(qUser,&(this->customers[user].ownWallet.balance.expenses[index]));
+        getinputUser(qUser, inputUser,&(this->customers[user].ownWallet.balance.expenses[index]));
         tryUser++;
-        getDebit(user, index, tryUser, "Incorrect money amount, please retry:", threshold);
+        getDebit(user, index, tryUser, "Incorrect money amount, please retry:", inputUser, threshold);
 
     }else if(tryUser > 0 && this->customers[user].ownWallet.balance.expenses[index] < threshold)
     {
-        getinputUser("Incorrect money amount, please retry:",&(this->customers[user].ownWallet.balance.expenses[index]));
+        getinputUser("Incorrect money amount, please retry:", inputUser, &(this->customers[user].ownWallet.balance.expenses[index]));
         tryUser++;
-        getDebit(user, index, tryUser, "Incorrect money amount, please retry:", threshold);
+        getDebit(user, index, tryUser, "Incorrect money amount, please retry:", inputUser, threshold);
     }else if(tryUser > 0 && this->customers[user].ownWallet.balance.expenses[index] >= threshold){tryUser = 0;}
 
 }; 
 
-void Bank::getCredit(int& user, int& index, int& tryUser, const std::string& qUser, const int& threshold){
+void Bank::getCredit(int& user, int& index, int& tryUser, const std::string& qUser, std::string& inputUser, const int& threshold){
 
     if(tryUser == 0)
     {
-        getinputUser(qUser,&(this->customers[user].ownWallet.balance.profits[index]));
+        getinputUser(qUser, inputUser, &(this->customers[user].ownWallet.balance.profits[index]));
         tryUser++;
-        getCredit(user, index, tryUser, "Incorrect money amount, please retry:", threshold);
+        getCredit(user, index, tryUser, "Incorrect money amount, please retry:", inputUser, threshold);
 
     }else if(tryUser > 0 && this->customers[user].ownWallet.balance.profits[index] < threshold)
     {
-        getinputUser("Incorrect money amount, please retry:", &(this->customers[user].ownWallet.balance.profits[index]));
+        getinputUser("Incorrect money amount, please retry:", inputUser, &(this->customers[user].ownWallet.balance.profits[index]));
         tryUser++;
-        getCredit( user, index, tryUser, "Incorrect money amount, please retry:", threshold);  
+        getCredit( user, index, tryUser, "Incorrect money amount, please retry:", inputUser, threshold);  
     }else if(tryUser > 0 && this->customers[user].ownWallet.balance.profits[index] >= threshold){tryUser = 0;}
  };
 

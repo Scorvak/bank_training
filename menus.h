@@ -9,8 +9,8 @@
 #include "classes.h"
 
 
-void showMenu(Bank* account, bool* access, int* pintUser, float* pfloatUser, std::string* pstringUser);
-void accountMenu(Bank* account, bool* access, int* pintUser, float* pfloatUser, std::string* pstringUser);
-void operationMenu(Bank* account, bool* access, int* pintUser, float* pfloatUser, std::string* pstringUser);
+void showMenu(Bank* account, DataBase* userBase);
+void accountMenu(Bank* account, DataBase* userBase);
+void operationMenu(Bank* account, DataBase* userBase);
 
 #endif

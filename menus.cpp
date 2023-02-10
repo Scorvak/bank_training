@@ -11,7 +11,7 @@ void showMenu(Bank* account, DataBase* userBase)
         if(userBase->boolBase[3])
         {
             std::cout << "In order to open your new account, you need to provide several personnal informations." << std::endl;
-            account->getAge(userBase->intBase[0]);
+            account->getAge(userBase->intBase[0], userBase->stringBase[4]);
 
             if(account->showAge(userBase->intBase[0]) < 18)
             {
@@ -19,9 +19,9 @@ void showMenu(Bank* account, DataBase* userBase)
             }else{
 
             account->resetProfits(userBase->intBase[0]); account->resetExpenses(userBase->intBase[0]);
-            account->getName(userBase->intBase[0]);account->getPassword(userBase->intBase[0]);
+            account->getName(userBase->intBase[0], userBase->stringBase[4]);account->getPassword(userBase->intBase[0], userBase->stringBase[4]);
             userBase->intBase[2] = 0; userBase->intBase[3] = 0; 
-            account->getCredit(userBase->intBase[0],userBase->intBase[2],userBase->intBase[3], "To confirm your account opening, please make a first deposit of at least 50 euros", 50);
+            account->getCredit(userBase->intBase[0],userBase->intBase[2],userBase->intBase[3], "To confirm your account opening, please make a first deposit of at least 50 euros", userBase->stringBase[0], 50);
             account->computeWallet(userBase->intBase[0], userBase->floatBase[0], userBase->floatBase[1]);
             account->resetFriends(userBase->intBase[0],userBase->intBase[4]);
 
@@ -33,7 +33,7 @@ void showMenu(Bank* account, DataBase* userBase)
         break;
 
         case 2:
-            userBase->boolBase[0] = account->checkUser(userBase->boolBase, userBase->intBase[0], userBase->intBase[4], userBase->stringBase[2], userBase->stringBase[3], "Pleaser enter your firstname:\n");
+            userBase->boolBase[0] = account->checkUser(userBase->boolBase, userBase->intBase[0], userBase->intBase[4], userBase->stringBase, "Pleaser enter your firstname:\n");
             if(userBase->boolBase[0]){accountMenu(account, userBase);}
             else{showMenu(account, userBase);}
         break;
@@ -66,13 +66,13 @@ void accountMenu(Bank* account, DataBase* userBase)
                 break;
 
             case 3:
-                account->convertCurrency(userBase->intBase[0], userBase->intBase[1], userBase->floatBase[2], userBase->stringBase[0], userBase->stringBase[1]);
+                account->convertCurrency(userBase->intBase[0], userBase->intBase[1], userBase->floatBase[2], userBase->stringBase);
                 accountMenu(account, userBase);
                 break;
 
             case 4:
                 account->checkFriend(userBase->boolBase[3],userBase->intBase[0], userBase->intBase[4],"Sorry, you can't have more friends. Cherish those you already have. Or kill one if you really need one free spot :)\n");
-                if(userBase->boolBase[3]){account->addFriend(userBase->intBase[0],userBase->intBase[4],userBase->stringBase[0]);}
+                if(userBase->boolBase[3]){account->addFriend(userBase->intBase[0],userBase->intBase[4],userBase->stringBase);}
                 accountMenu(account, userBase);
                 break;
 
@@ -95,7 +95,7 @@ void operationMenu(Bank* account, DataBase* userBase){
     switch(userBase->intBase[1])
     {
         case 1:
-            account->repeatOperation(userBase->intBase[0], userBase->intBase[2], userBase->intBase[3], userBase->intBase[4], userBase->stringBase[0], "How much money do you want to deposit ?", 0 , &Bank::getCredit);
+            account->repeatOperation(userBase->intBase[0], userBase->intBase[2], userBase->intBase[3], userBase->intBase[4], userBase->stringBase, "How much money do you want to deposit ?", 0 , &Bank::getCredit);
             account->computeWallet(userBase->intBase[0], userBase->floatBase[0], userBase->floatBase[1]);
             operationMenu(account, userBase);
             break;

@@ -61,9 +61,9 @@ private:
     People customers[SIZE_CUSTOMERS];
 public:
 
-    void getName(int &user);
-    void getAge(int &user);
-    void getPassword(int &user);
+    void getName(int &user, std::string& inputUser);
+    void getAge(int &user, std::string& inputUser);
+    void getPassword(int &user, std::string& inputUser);
 
     int showAge(int &user);
     std::string showName(int &user);
@@ -81,11 +81,11 @@ public:
     int showCurrency(int& user);
 
 // Converts money in another currency
-    void convertCurrency(int& user, int& choice, float& money, std::string& preconv, std::string& postconv);
+    void convertCurrency(int& user, int& choice, float& money, std::string* stringUser);
     void showConversion(float& premoney, float* postmoney, std::string& preconv, std::string& postconv);
 
 // Checks user firstname and password for accessing account
-    bool checkUser(bool* access, int& userCheck, int& userspot, std::string& inputName, std::string& password, const std::string& qUser);
+    bool checkUser(bool* access, int& userCheck, int& userspot, std::string* stringUser, const std::string& qUser);
     void checkSpot(bool& access, int& user, int& userfree, const std::string& rUser);
     void checkFriend(bool& access, int& user, int& userfree, const std::string& rUser);
 
@@ -94,11 +94,11 @@ public:
     void resetExpenses(int& user);
 
 // Repeats operation 
-    void repeatOperation(int& user, int& index, int& tryUser, int& iniLoop, std::string& stringUser, const std::string& qUser, const int& threshold, void (Bank::*function)(int&,int&,int&,const std::string&, const int&));
+    void repeatOperation(int& user, int& index, int& tryUser, int& iniLoop, std::string* stringUser, const std::string& qUser, const int& threshold, void (Bank::*function)(int&,int&,int&, std::string&, const std::string&, const int&));
 
 // Methods related to customer's friends
     void resetFriends(int& user, int& iniFriend);
-    void addFriend(int& user, int& friendspot, std::string& friendname);
+    void addFriend(int& user, int& friendspot, std::string* friendname);
     void showFriends(int& user, int& friendspot, int& friendnum, std::string& friendname);
 
 

@@ -39,8 +39,7 @@ void Bank::getCredit(int& user, int& index, int& tryUser, const std::string& qUs
 // Repeats operations for user
 
 
-
- void Bank::repeatOperation(int& user, int& index, int& tryUser, int& iniLoop, std::string& stringUser, const std::string& qUser, const int& threshold, void (Bank::*function)(int&,int&,int&,const std::string&, const int&))
+ void Bank::repeatOperation(int& user, int& index, int& tryUser, int& iniLoop, std::string* stringUser, const std::string& qUser, const int& threshold, void (Bank::*function)(int&,int&,int&, std::string&, const std::string&, const int&))
  {
     index = 0;
     tryUser = 0;
@@ -48,11 +47,11 @@ void Bank::getCredit(int& user, int& index, int& tryUser, const std::string& qUs
 
     do{
 
-        (this->*function)(user, index, tryUser, qUser, threshold);
-        getinputUser("Do you want to add one more operation ?", stringUser);
-        if(stringUser == "yes" || stringUser == "Yes"){iniLoop++; index++; tryUser = 0;}
+        (this->*function)(user, index, tryUser, stringUser[1], qUser, threshold);
+        getinputUser("Do you want to add one more operation ?", stringUser[2], stringUser[0]);
+        if(stringUser[0] == "yes" || stringUser[0] == "Yes"){iniLoop++; index++; tryUser = 0;}
 
-    }while(stringUser == "yes" || stringUser == "Yes" && iniLoop < SIZE_BALANCE);
+    }while(stringUser[0] == "yes" || stringUser[0] == "Yes" && iniLoop < SIZE_BALANCE);
 
  };
 
@@ -124,53 +123,53 @@ float Bank::showWallet(int& user, float& money){
 int Bank::showCurrency(int& user){return int(this->customers[user].ownWallet.currency);};
 
 // Converts money in another currency
-void Bank::convertCurrency(int& user, int& choice, float& money, std::string& preconv, std::string& postconv){
+void Bank::convertCurrency(int& user, int& choice, float& money, std::string* stringUser){
 
     switch(this->customers[user].ownWallet.currency)
     {
         case Currency::dollar:
             money = this->customers[user].ownWallet.money.dollar ;
             money -= money*RATE_CONVERSION;
-            preconv = "dollar";
-            getinputUser("In which currency do you want to convert your balance ?\n1.\teuro\n2.\tyen\n",&choice);
+            stringUser[0] = "dollar";
+            getinputUser("In which currency do you want to convert your balance ?\n1.\teuro\n2.\tyen\n", stringUser[4] , choice);
             if(choice == 1){
                 this->customers[user].ownWallet.money.euro = money * 0.94;
-                postconv = "euro"; this->customers[user].ownWallet.currency = euro;
-                showConversion(money, &(this->customers[user].ownWallet.money.euro),preconv,postconv);}
+                stringUser[1] =  "euro"; this->customers[user].ownWallet.currency = euro;
+                showConversion(money, &(this->customers[user].ownWallet.money.euro), stringUser[0], stringUser[1]);}
             else if(choice == 2){
                 this->customers[user].ownWallet.money.yen = money * 130.76;
-                postconv = "yen"; this->customers[user].ownWallet.currency = yen; 
-                showConversion(money, &(this->customers[user].ownWallet.money.yen),preconv,postconv);}
+                stringUser[1] =  "yen"; this->customers[user].ownWallet.currency = yen; 
+                showConversion(money, &(this->customers[user].ownWallet.money.yen), stringUser[0], stringUser[1]);}
             break;
 
         case Currency::euro:
             money = this->customers[user].ownWallet.money.euro;
             money -= money*RATE_CONVERSION;
-            preconv = "euro";
-            getinputUser("In which currency do you want to convert your balance ?\n1.\tdollar\n2.\tyen\n",&choice);
+            stringUser[0] = "euro";
+            getinputUser("In which currency do you want to convert your balance ?\n1.\tdollar\n2.\tyen\n", stringUser[4] , choice);
             if(choice == 1){
-                this->customers[user].ownWallet.money.dollar = money * 1.07; postconv = "dollar";
+                this->customers[user].ownWallet.money.dollar = money * 1.07; stringUser[1] =  "dollar";
                 this->customers[user].ownWallet.currency = dollar;
-                showConversion(money, &(this->customers[user].ownWallet.money.dollar),preconv,postconv);}
+                showConversion(money, &(this->customers[user].ownWallet.money.dollar), stringUser[0], stringUser[1]);}
             else if(choice == 2){
-                this->customers[user].ownWallet.money.yen = money * 140.22; postconv = "yen";
+                this->customers[user].ownWallet.money.yen = money * 140.22; stringUser[1] =  "yen";
                 this->customers[user].ownWallet.currency = yen;
-                showConversion(money, &(this->customers[user].ownWallet.money.yen),preconv,postconv);}
+                showConversion(money, &(this->customers[user].ownWallet.money.yen), stringUser[0], stringUser[1]);}
             break;
 
         case Currency::yen:
             money = this->customers[user].ownWallet.money.yen;
             money -= money*RATE_CONVERSION;
-            preconv = "yen";
-            getinputUser("In which currency do you want to convert your balance ?\n1.\tdollar\n2.\teuro\n",&choice);
+            stringUser[0] = "yen";
+            getinputUser("In which currency do you want to convert your balance ?\n1.\tdollar\n2.\teuro\n", stringUser[4] , choice);
             if(choice == 1){
-                this->customers[user].ownWallet.money.dollar = money * 0.0076; postconv = "dollar";
+                this->customers[user].ownWallet.money.dollar = money * 0.0076; stringUser[1] =  "dollar";
                 this->customers[user].ownWallet.currency = dollar;
-                showConversion(money, &(this->customers[user].ownWallet.money.dollar),preconv,postconv);}
+                showConversion(money, &(this->customers[user].ownWallet.money.dollar), stringUser[0], stringUser[1]);}
             else if(choice == 2){
-                this->customers[user].ownWallet.money.euro = money * 0.0072; postconv = "euro";
+                this->customers[user].ownWallet.money.euro = money * 0.0072; stringUser[1] =  "euro";
                 this->customers[user].ownWallet.currency = euro;
-                showConversion(money, &(this->customers[user].ownWallet.money.euro),preconv,postconv);}
+                showConversion(money, &(this->customers[user].ownWallet.money.euro), stringUser[0], stringUser[1]);}
             break;
 
     }
@@ -181,22 +180,22 @@ void Bank::showConversion(float& premoney, float* postmoney, std::string& precon
  {std::cout << "Successful conversion of your " << premoney << " " << preconv << " in " << *postmoney << " " << postconv << "." << std::endl;};
 
 // Checks user firstname and password for accessing account
-bool Bank::checkUser(bool* access, int& userCheck, int& userspot, std::string& inputName, std::string& password, const std::string& qUser){
+bool Bank::checkUser(bool* access, int& userCheck, int& userspot, std::string* stringUser, const std::string& qUser){
 
     access[1] = false;
-    getinputUser(qUser,inputName);
+    getinputUser(qUser, stringUser[4], stringUser[2]);
 
     for(int userspot = 0; userspot < SIZE_CUSTOMERS; userspot++)
     {
-        if(inputName == this->customers[userspot].firstname){access[1] = true;userCheck = userspot;}
-
+        if(stringUser[2] == this->customers[userspot].firstname){access[1] = true; userCheck = userspot;}
+ 
     }
     if(access[1])
     {
 
-    std::cout << "Dear " << showName(userCheck);getinputUser(", please enter your password:\n",password);
+    std::cout << "Dear " << showName(userCheck); getinputUser(", please enter your password:\n", stringUser[4], stringUser[3]);
 
-    if(password == this->customers[userCheck].password){std::cout << "Sucessful access\n" << std::endl;access[2] =  true;}
+    if(stringUser[3] == this->customers[userCheck].password){std::cout << "Sucessful access\n" << std::endl; access[2] =  true;}
     else{std::cout << "Failed access\n" << std::endl; access[2] = false;}
 
         return access[2];
@@ -244,15 +243,15 @@ void Bank::checkFriend(bool& access, int& user, int& userfree, const std::string
 
 People::People(){this->ownWallet.money.euro = 0; this->ownWallet.currency = euro;};
 
-void Bank::getName(int &user){getinputUser("Please enter your firstname:\n", &(this->customers[user].firstname));}
-void Bank::getPassword(int &user){getinputUser("Please enter a password for your account:\n", &(this->customers[user].password));}
-void Bank::getAge(int &user){getinputUser("Please enter your age:\n", &(this->customers[user].age));}
+void Bank::getName(int &user, std::string& inputUser){getinputUser("Please enter your firstname:\n", inputUser, &(this->customers[user].firstname));}
+void Bank::getPassword(int &user, std::string& inputUser){getinputUser("Please enter a password for your account:\n", inputUser, &(this->customers[user].password));}
+void Bank::getAge(int &user, std::string& inputUser){getinputUser("Please enter your age:\n", inputUser, &(this->customers[user].age));}
 
 void Bank::resetFriends(int& user, int& iniFriend){for(iniFriend = 0; iniFriend < SIZE_FRIENDS;iniFriend++){this->customers[user].friends[iniFriend] = "userfree";}};
-void Bank::addFriend(int& user, int& friendspot, std::string& friendname){
+void Bank::addFriend(int& user, int& friendspot, std::string* stringUser){
 
-    getinputUser("What is the name of your friend ?\n",friendname);
-    this->customers[user].friends[friendspot] = friendname;
+    getinputUser("What is the name of your friend ?\n",stringUser[4], stringUser[3]);
+    this->customers[user].friends[friendspot] = stringUser[3];
 };
 
 void Bank::showFriends(int& user, int& friendspot, int& friendnum ,std::string& friendname){

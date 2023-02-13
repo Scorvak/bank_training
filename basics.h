@@ -36,7 +36,7 @@ void getinputUser(const std::string& requestUser, std::string& inputUser, T& cho
 
     std::cout << requestUser << std::endl;
     getline(std::cin, inputUser); 
-    std::stringstream(inputUser) >> *choiceUser; 
+    std::stringstream(inputUser) >> choiceUser; 
     
 }
 

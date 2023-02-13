@@ -21,7 +21,7 @@ void showMenu(Bank* account, DataBase* userBase)
             account->resetProfits(userBase->intBase[0]); account->resetExpenses(userBase->intBase[0]);
             account->getName(userBase->intBase[0], userBase->stringBase[4]);account->getPassword(userBase->intBase[0], userBase->stringBase[4]);
             userBase->intBase[2] = 0; userBase->intBase[3] = 0; 
-            account->getCredit(userBase->intBase[0],userBase->intBase[2],userBase->intBase[3], "To confirm your account opening, please make a first deposit of at least 50 euros", userBase->stringBase[0], 50);
+            account->getCredit(userBase->intBase[0],userBase->intBase[2],userBase->intBase[3], userBase->stringBase[0], "To confirm your account opening, please make a first deposit of at least 50 euros", 50);
             account->computeWallet(userBase->intBase[0], userBase->floatBase[0], userBase->floatBase[1]);
             account->resetFriends(userBase->intBase[0],userBase->intBase[4]);
 
@@ -33,8 +33,8 @@ void showMenu(Bank* account, DataBase* userBase)
         break;
 
         case 2:
-            userBase->boolBase[0] = account->checkUser(userBase->boolBase, userBase->intBase[0], userBase->intBase[4], userBase->stringBase, "Pleaser enter your firstname:\n");
-            if(userBase->boolBase[0]){accountMenu(account, userBase);}
+            account->checkUser(userBase->boolBase, userBase->intBase[0], userBase->intBase[3], userBase->intBase[4], userBase->stringBase, "Pleaser enter your firstname:\n");
+            if(userBase->boolBase[2]){accountMenu(account, userBase);}
             else{showMenu(account, userBase);}
         break;
 

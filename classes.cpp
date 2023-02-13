@@ -3,41 +3,40 @@
 // Wallet class methods 
 
 // Gets from the user the money input
-void Bank::getDebit(int& user, int& index, int& tryUser, const std::string& qUser, std::string& inputUser, const int& threshold){
+void Bank::getDebit(int& user, int& index, int& tryUser, std::string& inputUser, const std::string& qUser, const int& threshold){
 
     if(tryUser == 0)
     {
         getinputUser(qUser, inputUser,&(this->customers[user].ownWallet.balance.expenses[index]));
         tryUser++;
-        getDebit(user, index, tryUser, "Incorrect money amount, please retry:", inputUser, threshold);
+        getDebit(user, index, tryUser, inputUser, "Incorrect money amount, please retry:", threshold);
 
     }else if(tryUser > 0 && this->customers[user].ownWallet.balance.expenses[index] < threshold)
     {
         getinputUser("Incorrect money amount, please retry:", inputUser, &(this->customers[user].ownWallet.balance.expenses[index]));
         tryUser++;
-        getDebit(user, index, tryUser, "Incorrect money amount, please retry:", inputUser, threshold);
+        getDebit(user, index, tryUser, inputUser, "Incorrect money amount, please retry:", threshold);
     }else if(tryUser > 0 && this->customers[user].ownWallet.balance.expenses[index] >= threshold){tryUser = 0;}
 
 }; 
 
-void Bank::getCredit(int& user, int& index, int& tryUser, const std::string& qUser, std::string& inputUser, const int& threshold){
+void Bank::getCredit(int& user, int& index, int& tryUser, std::string& inputUser, const std::string& qUser, const int& threshold){
 
     if(tryUser == 0)
     {
         getinputUser(qUser, inputUser, &(this->customers[user].ownWallet.balance.profits[index]));
         tryUser++;
-        getCredit(user, index, tryUser, "Incorrect money amount, please retry:", inputUser, threshold);
+        getCredit(user, index, tryUser, inputUser, "Incorrect money amount, please retry:", threshold);
 
     }else if(tryUser > 0 && this->customers[user].ownWallet.balance.profits[index] < threshold)
     {
         getinputUser("Incorrect money amount, please retry:", inputUser, &(this->customers[user].ownWallet.balance.profits[index]));
         tryUser++;
-        getCredit( user, index, tryUser, "Incorrect money amount, please retry:", inputUser, threshold);  
+        getCredit( user, index, tryUser, inputUser, "Incorrect money amount, please retry:", threshold);  
     }else if(tryUser > 0 && this->customers[user].ownWallet.balance.profits[index] >= threshold){tryUser = 0;}
  };
 
 // Repeats operations for user
-
 
  void Bank::repeatOperation(int& user, int& index, int& tryUser, int& iniLoop, std::string* stringUser, const std::string& qUser, const int& threshold, void (Bank::*function)(int&,int&,int&, std::string&, const std::string&, const int&))
  {
@@ -180,7 +179,7 @@ void Bank::showConversion(float& premoney, float* postmoney, std::string& precon
  {std::cout << "Successful conversion of your " << premoney << " " << preconv << " in " << *postmoney << " " << postconv << "." << std::endl;};
 
 // Checks user firstname and password for accessing account
-bool Bank::checkUser(bool* access, int& userCheck, int& userspot, std::string* stringUser, const std::string& qUser){
+void Bank::checkUser(bool* access, int& userCheck, int& userspot, int& userTry, std::string* stringUser, const std::string& qUser){
 
     access[1] = false;
     getinputUser(qUser, stringUser[4], stringUser[2]);
@@ -195,15 +194,24 @@ bool Bank::checkUser(bool* access, int& userCheck, int& userspot, std::string* s
 
     std::cout << "Dear " << showName(userCheck); getinputUser(", please enter your password:\n", stringUser[4], stringUser[3]);
 
-    if(stringUser[3] == this->customers[userCheck].password){std::cout << "Sucessful access\n" << std::endl; access[2] =  true;}
-    else{std::cout << "Failed access\n" << std::endl; access[2] = false;}
+    for(userTry = 0; userTry < 2; userTry++){
 
-        return access[2];
+    if(stringUser[3] == this->customers[userCheck].password){
+            std::cout << "Sucessful access\n" << std::endl; access[2] =  true; break;}
+    else if(stringUser[3] != this->customers[userCheck].password && userTry < 2){
+        getinputUser("Incorrect password, please try again:", stringUser[4], stringUser[3]);}
+    else if(userTry == 2){
+        std::cout << "Sorry, too many attempts done, try to log in later." << std::endl;
+        access[2] = false;
+        }
+    }
     }
     else{
         std::cout << "Sorry, we can't find this account with this name. Please retry again or open a new account through the main menu." << std::endl;
-        return false;
+        access[2] = false;
     }
+
+
 };
 
 void Bank::checkSpot(bool& access, int& user, int& userfree, const std::string& rUser){
@@ -243,9 +251,9 @@ void Bank::checkFriend(bool& access, int& user, int& userfree, const std::string
 
 People::People(){this->ownWallet.money.euro = 0; this->ownWallet.currency = euro;};
 
-void Bank::getName(int &user, std::string& inputUser){getinputUser("Please enter your firstname:\n", inputUser, &(this->customers[user].firstname));}
-void Bank::getPassword(int &user, std::string& inputUser){getinputUser("Please enter a password for your account:\n", inputUser, &(this->customers[user].password));}
-void Bank::getAge(int &user, std::string& inputUser){getinputUser("Please enter your age:\n", inputUser, &(this->customers[user].age));}
+void Bank::getName(int& user, std::string& inputUser){getinputUser("Please enter your firstname:\n", inputUser, &(this->customers[user].firstname));}
+void Bank::getPassword(int& user, std::string& inputUser){getinputUser("Please enter a password for your account:\n", inputUser, &(this->customers[user].password));}
+void Bank::getAge(int& user, std::string& inputUser){getinputUser("Please enter your age:\n", inputUser, &(this->customers[user].age));}
 
 void Bank::resetFriends(int& user, int& iniFriend){for(iniFriend = 0; iniFriend < SIZE_FRIENDS;iniFriend++){this->customers[user].friends[iniFriend] = "userfree";}};
 void Bank::addFriend(int& user, int& friendspot, std::string* stringUser){
@@ -268,5 +276,5 @@ friendnum = 1;
 
 
 
-int Bank::showAge(int &user){return this->customers[user].age;}
-std::string Bank::showName(int &user){return this->customers[user].firstname;};
+int Bank::showAge(int& user){return this->customers[user].age;}
+std::string Bank::showName(int& user){return this->customers[user].firstname;};

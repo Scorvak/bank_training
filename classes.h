@@ -69,8 +69,8 @@ public:
     std::string showName(int &user);
 
 // Gets from the user the money input
-    void getDebit(int& user, int& index, int& tryUser, const std::string& qUser, std::string& inputUser, const int& threshold);
-    void getCredit(int& user, int& index, int& tryUser, const std::string& qUser, std::string& inputUser, const int& threshold);
+    void getDebit(int& user, int& index, int& tryUser, std::string& inputUser, const std::string& qUser, const int& threshold);
+    void getCredit(int& user, int& index, int& tryUser, std::string& inputUser, const std::string& qUser, const int& threshold);
 
 // Computes the total benefit and expense of the user money
     void computeWallet(int& user, float& profits, float& expenses);
@@ -85,7 +85,7 @@ public:
     void showConversion(float& premoney, float* postmoney, std::string& preconv, std::string& postconv);
 
 // Checks user firstname and password for accessing account
-    bool checkUser(bool* access, int& userCheck, int& userspot, std::string* stringUser, const std::string& qUser);
+    void checkUser(bool* access, int& userCheck, int& userspot, int& userTry, std::string* stringUser, const std::string& qUser);
     void checkSpot(bool& access, int& user, int& userfree, const std::string& rUser);
     void checkFriend(bool& access, int& user, int& userfree, const std::string& rUser);
 

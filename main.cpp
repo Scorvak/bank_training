@@ -6,26 +6,20 @@
 #include "classes.h"
 #include "menus.h"
 
-#define SIZE_PINT 5
-#define SIZE_PFLOAT 3
-
 int main()
 
 {
 
-    Bank* pdataBank;
-    DataBase* userBase;
+    Bank* CresusBank;
 
     //void (*pfunUser)(int&,int&,int&,const std::string, const int&);
+    CresusBank = new Bank;
+//   std::fill(userBase->intBase, userBase->intBase + SIZE_PINT,0);
+//  std::fill(userBase->floatBase, userBase->floatBase + SIZE_PFLOAT,0);
 
-    userBase = new DataBase;
-    pdataBank = new Bank;
-    std::fill(userBase->intBase, userBase->intBase + SIZE_PINT,0);
-    std::fill(userBase->floatBase, userBase->floatBase + SIZE_PFLOAT,0);
+    showMenu(CresusBank);
 
-    showMenu(pdataBank, userBase);
-
-    delete userBase, pdataBank;
+    delete CresusBank;
 
     return 0;
     

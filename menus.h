@@ -9,8 +9,8 @@
 #include "classes.h"
 
 
-void showMenu(Bank* account, DataBase* userBase);
-void accountMenu(Bank* account, DataBase* userBase);
-void operationMenu(Bank* account, DataBase* userBase);
+void showMenu(Bank* bank);
+void accountMenu(Bank* bank);
+void operationMenu(Bank* bank);
 
 #endif

@@ -7,6 +7,7 @@
 #include <math.h>
 #include "basics.h"
 
+#define SIZE_DB 5
 #define SIZE_BALANCE 10
 #define SIZE_FRIENDS 5
 #define SIZE_CUSTOMERS 10
@@ -14,6 +15,14 @@
 
 enum Currency {euro, dollar, yen};
 const std::string currency[3] = {"euro","dollar","yen"};
+
+struct DataBase {
+
+    bool boolBase[SIZE_DB];
+    int intBase[SIZE_DB];
+    float floatBase[SIZE_DB];
+    std::string stringBase[SIZE_DB];
+};
 
 struct Balance {
     float expenses[SIZE_BALANCE];
@@ -54,55 +63,58 @@ public:
 
 };
 
-
 class Bank {
 
 private:
     People customers[SIZE_CUSTOMERS];
+    DataBase bankDB;
 public:
 
-    void getName(int &user, std::string& inputUser);
-    void getAge(int &user, std::string& inputUser);
-    void getPassword(int &user, std::string& inputUser);
+    void getName();
+    void getAge();
+    void getPassword();
+    void getChoice(const std::string& displayMenu);
 
-    int showAge(int &user);
-    std::string showName(int &user);
+    int showAge();
+    int showChoice();
+
+    bool showBool(const int& check);
+    std::string showName();
 
 // Gets from the user the money input
-    void getDebit(int& user, int& index, int& tryUser, std::string& inputUser, const std::string& qUser, const int& threshold);
-    void getCredit(int& user, int& index, int& tryUser, std::string& inputUser, const std::string& qUser, const int& threshold);
+    void getDebit(const std::string& qUser, const int& threshold);
+    void getCredit(const std::string& qUser, const int& threshold);
 
 // Computes the total benefit and expense of the user money
-    void computeWallet(int& user, float& profits, float& expenses);
-    void resetWallet(int& user);
+    void computeWallet();
+    void resetWallet();
 
 // Shows available money in the wallet
-    float showWallet(int& user, float& money);
-    int showCurrency(int& user);
+    float showWallet();
+    int showCurrency();
 
 // Converts money in another currency
-    void convertCurrency(int& user, int& choice, float& money, std::string* stringUser);
-    void showConversion(float& premoney, float* postmoney, std::string& preconv, std::string& postconv);
+    void convertCurrency();
 
 // Checks user firstname and password for accessing account
-    void checkUser(bool* access, int& userCheck, int& userspot, int& userTry, std::string* stringUser, const std::string& qUser);
-    void checkSpot(bool& access, int& user, int& userfree, const std::string& rUser);
-    void checkFriend(bool& access, int& user, int& userfree, const std::string& rUser);
+    void checkUser(const std::string& qUser);
+    void checkSpot(const std::string& rUser);
+    void checkFriend(const std::string& rUser);
 
 // Resets profits and expenses
-    void resetProfits(int& user);
-    void resetExpenses(int& user);
+    void resetProfits();
+    void resetExpenses();
 
 // Repeats operation 
-    void repeatOperation(int& user, int& index, int& tryUser, int& iniLoop, std::string* stringUser, const std::string& qUser, const int& threshold, void (Bank::*function)(int&,int&,int&, std::string&, const std::string&, const int&));
+    void repeatOperation(const std::string& qUser, const int& threshold, void (Bank::*function)(const std::string&, const int&));
 
 // Methods related to customer's friends
-    void resetFriends(int& user, int& iniFriend);
-    void addFriend(int& user, int& friendspot, std::string* friendname);
-    void showFriends(int& user, int& friendspot, int& friendnum, std::string& friendname);
+    void resetFriends();
+    void addFriend();
+    void showFriends();
 
-
-
+// Resets bank database
+    void resetDB(const int& index);
 };
 
 #endif

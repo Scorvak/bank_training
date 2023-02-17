@@ -14,7 +14,6 @@
 #define RATE_CONVERSION 0.025
 
 enum Currency {euro, dollar, yen};
-const std::string currency[3] = {"euro","dollar","yen"};
 
 struct DataBase {
 
@@ -68,6 +67,7 @@ class Bank {
 private:
     People customers[SIZE_CUSTOMERS];
     DataBase bankDB;
+    std::string currencies[3] = {"euro","dollar","yen"};
 public:
 
     void getName();
@@ -91,8 +91,7 @@ public:
 
 // Shows available money in the wallet
     float showWallet();
-    int showCurrency();
-
+    std::string Bank::showCurrency();
 // Converts money in another currency
     void convertCurrency();
 

@@ -22,16 +22,18 @@ void Bank::getDebit(const std::string& qUser, const int& threshold){
 
     if(this->bankDB.intBase[3] == 0)
     {
-        getinputUser(qUser, this->bankDB.stringBase[4], &(this->customers[this->bankDB.intBase[0]].ownWallet.balance.expenses[this->bankDB.intBase[3]]));
+        getinputUser(qUser, this->bankDB.stringBase[4], &(this->customers[this->bankDB.intBase[0]].ownWallet.balance.expenses[this->bankDB.intBase[2]]));
         this->bankDB.intBase[3]++;
         getDebit("Incorrect money amount, please retry:", threshold);
 
-    }else if(this->bankDB.intBase[3] > 0 && this->customers[this->bankDB.intBase[0]].ownWallet.balance.expenses[this->bankDB.intBase[3]] < threshold)
+    }else if(this->bankDB.intBase[3] > 0 && this->customers[this->bankDB.intBase[0]].ownWallet.balance.expenses[this->bankDB.intBase[2]] < threshold)
     {
-        getinputUser("Incorrect money amount, please retry:",this->bankDB.stringBase[4], &(this->customers[this->bankDB.intBase[0]].ownWallet.balance.expenses[this->bankDB.intBase[3]]));
+        getinputUser("Incorrect money amount, please retry:",this->bankDB.stringBase[4], &(this->customers[this->bankDB.intBase[0]].ownWallet.balance.expenses[this->bankDB.intBase[2]]));
         this->bankDB.intBase[3]++;
         getDebit("Incorrect money amount, please retry:", threshold);
-    }else if(this->bankDB.intBase[3] > 0 && this->customers[this->bankDB.intBase[0]].ownWallet.balance.expenses[this->bankDB.intBase[3]] >= threshold){this->bankDB.intBase[3] = 0;}
+    }else if(this->bankDB.intBase[3] > 0 && this->customers[this->bankDB.intBase[0]].ownWallet.balance.expenses[this->bankDB.intBase[2]] >= threshold){
+        std::cout << "Thank you, we successfully take in account the debit of " << this->customers[this->bankDB.intBase[0]].ownWallet.balance.profits[this->bankDB.intBase[2]] << showCurrency() << "." << std::endl;
+    }
 
 }
 
@@ -39,16 +41,17 @@ void Bank::getCredit(const std::string& qUser, const int& threshold){
 
     if(this->bankDB.intBase[3] == 0)
     {
-        getinputUser(qUser,this->bankDB.stringBase[4], &(this->customers[this->bankDB.intBase[0]].ownWallet.balance.profits[this->bankDB.intBase[3]]));
+        getinputUser(qUser,this->bankDB.stringBase[4], &(this->customers[this->bankDB.intBase[0]].ownWallet.balance.profits[this->bankDB.intBase[2]]));
         this->bankDB.intBase[3]++;
         getCredit("Incorrect money amount, please retry:", threshold);
 
-    }else if(this->bankDB.intBase[3] > 0 && this->customers[this->bankDB.intBase[0]].ownWallet.balance.profits[this->bankDB.intBase[3]] < threshold)
+    }else if(this->bankDB.intBase[3] > 0 && this->customers[this->bankDB.intBase[0]].ownWallet.balance.profits[this->bankDB.intBase[2]] < threshold)
     {
-        getinputUser("Incorrect money amount, please retry:",this->bankDB.stringBase[4], &(this->customers[this->bankDB.intBase[0]].ownWallet.balance.profits[this->bankDB.intBase[3]]));
+        getinputUser("Incorrect money amount, please retry:",this->bankDB.stringBase[4], &(this->customers[this->bankDB.intBase[0]].ownWallet.balance.profits[this->bankDB.intBase[2]]));
         this->bankDB.intBase[3]++;
         getCredit("Incorrect money amount, please retry:", threshold);  
-    }else if(this->bankDB.intBase[3] > 0 && this->customers[this->bankDB.intBase[0]].ownWallet.balance.profits[this->bankDB.intBase[3]] >= threshold){this->bankDB.intBase[3] = 0;}
+    }else if(this->bankDB.intBase[3] > 0 && this->customers[this->bankDB.intBase[0]].ownWallet.balance.profits[this->bankDB.intBase[2]] >= threshold){
+        std::cout << "Thank you, we successfully receive your " << this->customers[this->bankDB.intBase[0]].ownWallet.balance.profits[this->bankDB.intBase[2]] << showCurrency() << "." << std::endl;}
  }
 
 // Repeats operations for user
@@ -62,7 +65,7 @@ void Bank::getCredit(const std::string& qUser, const int& threshold){
 
         (this->*function)(qUser, threshold);
         getinputUser("Do you want to add one more operation ?", this->bankDB.stringBase[1], this->bankDB.stringBase[0]);
-        if(this->bankDB.stringBase[0] == "yes" || this->bankDB.stringBase[0] == "Yes"){this->bankDB.intBase[2]; this->bankDB.intBase[3] = 0;}
+        if(this->bankDB.stringBase[0] == "yes" || this->bankDB.stringBase[0] == "Yes"){this->bankDB.intBase[2]++    ; this->bankDB.intBase[3] = 0;}
 
     }while(this->bankDB.stringBase[0]  == "yes" || this->bankDB.stringBase[0]  == "Yes" &&  this->bankDB.intBase[2] < SIZE_BALANCE);
 
@@ -128,7 +131,9 @@ float Bank::showWallet(){
     return this->bankDB.floatBase[2];
 };
 
-int Bank::showCurrency(){return int(this->customers[this->bankDB.intBase[0]].ownWallet.currency);}
+std::string Bank::showCurrency(){
+    return this->currencies[int(this->customers[this->bankDB.intBase[0]].ownWallet.currency)];
+}
 
 // Converts money in another currency
 void Bank::convertCurrency(){

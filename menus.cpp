@@ -56,7 +56,7 @@ void accountMenu(Bank* bank)
         switch(bank->showChoice())
         {
             case 1:
-                std::cout << "Your balance account is now at " << bank->showWallet() << " " << currency[bank->showCurrency()]<< "\n" << std::endl;
+                std::cout << "Your balance account is now at " << bank->showWallet() << " " << bank->showCurrency() << "\n" << std::endl;
                 accountMenu(bank);
                 break;
                 

@@ -91,7 +91,7 @@ public:
 
 // Shows available money in the wallet
     float showWallet();
-    std::string Bank::showCurrency();
+    std::string showCurrency();
 // Converts money in another currency
     void convertCurrency();
 

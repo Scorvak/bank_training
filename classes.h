@@ -13,6 +13,12 @@
 #define SIZE_CUSTOMERS 10
 #define RATE_CONVERSION 0.025
 
+
+namespace Entities
+{
+
+
+
 enum Currency {euro, dollar, yen};
 
 struct DataBase {
@@ -115,5 +121,7 @@ public:
 // Resets bank database
     void resetDB(const int& index);
 };
+
+}
 
 #endif

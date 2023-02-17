@@ -8,9 +8,13 @@
 #include "basics.h"
 #include "classes.h"
 
+namespace Menus
+{
+void showMenu(Entities::Bank* bank);
+void accountMenu(Entities::Bank* bank);
+void operationMenu(Entities::Bank* bank);
 
-void showMenu(Bank* bank);
-void accountMenu(Bank* bank);
-void operationMenu(Bank* bank);
+}
+
 
 #endif

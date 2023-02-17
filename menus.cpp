@@ -1,6 +1,6 @@
 #include "menus.h"
 
-void showMenu(Bank* bank)
+void Menus::showMenu(Entities::Bank* bank)
 {
     bank->getChoice("\n\tWelcome to Securrency Bank Inc.\t\n\nPlease select an option among the following ones:\n\n\t1. Open new account\n\t2. Manage account\n\t3. Close the program\n");
     switch(bank->showChoice())
@@ -28,13 +28,13 @@ void showMenu(Bank* bank)
             
             }
         }
-        showMenu(bank);
+        Menus::showMenu(bank);
         break;
 
         case 2:
             bank->checkUser("Pleaser enter your firstname:\n");
-            if(bank->showBool(1)){accountMenu(bank);}
-            else{showMenu(bank);}
+            if(bank->showBool(1)){Menus::accountMenu(bank);}
+            else{Menus::showMenu(bank);}
         break;
 
         case 3:
@@ -43,13 +43,13 @@ void showMenu(Bank* bank)
 
         default:
             std::cout << "\nPlease reconsider your choice, which is invalid from our available operations..." << std::endl;
-            showMenu(bank);
+            Menus::showMenu(bank);
             break;
     }
 };
 
 
-void accountMenu(Bank* bank)
+void Menus::accountMenu(Entities::Bank* bank)
 {
         bank->getChoice( "Please choose a bank operation on your account:\n\n\t1. Consult your account balance\n\t2. Add funds or make a transfer order to another account\n\t3. Convert your currency balance\n\t4. Add friend account\n\t5. Return to the main menu\n");
        
@@ -57,60 +57,60 @@ void accountMenu(Bank* bank)
         {
             case 1:
                 std::cout << "Your balance account is now at " << bank->showWallet() << " " << bank->showCurrency() << "\n" << std::endl;
-                accountMenu(bank);
+                Menus::accountMenu(bank);
                 break;
                 
             case 2:
                 std::cout << "Ongoing development...\n\n";
-                operationMenu(bank);
+                Menus::operationMenu(bank);
                 break;
 
             case 3:
                 bank->convertCurrency();
-                accountMenu(bank);
+                Menus::accountMenu(bank);
                 break;
 
             case 4:
                 bank->checkFriend("Sorry, you can't have more friends. Cherish those you already have. Or kill one if you really need one free spot :)\n");
                 if(bank->showBool(3)){bank->addFriend();}
-                accountMenu(bank);
+                Menus::accountMenu(bank);
                 break;
 
             case 5:
-                showMenu(bank);
+                Menus::showMenu(bank);
                 break;
 
             default:
                  std::cout << "Please reconsider your choice, which is invalid from our available operations..." << std::endl;
-                 accountMenu(bank);
+                 Menus::accountMenu(bank);
                  break;
         }
 }
 
-void operationMenu(Bank* bank){
+void Menus::operationMenu(Entities::Bank* bank){
 
     bank->getChoice("Please choose which operation you want to do:\n\n\t1. Make deposit\n\t2. Transfer money to another account\n\t3. Return to previous menu");
     switch(bank->showChoice())
     {
         case 1:
-            bank->repeatOperation("How much money do you want to deposit ?", 0 , &Bank::getCredit);
+            bank->repeatOperation("How much money do you want to deposit ?", 0 , &Entities::Bank::getCredit);
             bank->computeWallet();
-            operationMenu(bank);
+            Menus::operationMenu(bank);
             break;
 
         case 2:
             std::cout << "To whom do you want transfer money ?\n" << std::endl;
             bank->showFriends();
-            operationMenu(bank);
+            Menus::operationMenu(bank);
             break;
 
         case 3:
-            accountMenu(bank);
+            Menus::accountMenu(bank);
             break;
 
         default:
             std::cout << "Please reconsider your choice, which is invalid from our available operations..." << std::endl;
-            operationMenu(bank);
+            Menus::operationMenu(bank);
             break;
 
     }

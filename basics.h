@@ -14,14 +14,7 @@
     // float: 0 = profits; 1 = expenses; 2 = money
     // string: 0 = pre conversion currency; 1 = post conversion currency; 2 = firstname user; 3 = password user; 4 = temporary
 
-template <typename T>
-void getinputUser(const std::string& requestUser, std::string& inputUser, T* choiceUser){
-
-    std::cout << requestUser << std::endl;
-    getline(std::cin, inputUser); 
-    std::stringstream(inputUser) >> *choiceUser; 
-    
-}
+namespace Basics{
 
 template <typename T>
 void getinputUser(const std::string& requestUser, std::string& inputUser, T& choiceUser){
@@ -32,8 +25,15 @@ void getinputUser(const std::string& requestUser, std::string& inputUser, T& cho
     
 }
 
+template<typename T>
+T sumArray(T* array, int size){
 
-int sumArray(int* array, const int size);
-float sumArray(float* array, const int size);
+ if(size > 1){
+    return array[size-1] + sumArray(array, (size - 1));}
+    else{return array[0]};
+
+}
+
+}
 
 #endif

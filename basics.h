@@ -30,7 +30,7 @@ T sumArray(T* array, int size){
 
  if(size > 1){
     return array[size-1] + sumArray(array, (size - 1));}
-    else{return array[0]};
+    else{return array[0];}
 
 }
 

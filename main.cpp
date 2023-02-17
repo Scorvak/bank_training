@@ -10,14 +10,14 @@ int main()
 
 {
 
-    Bank* CresusBank;
+    Entities::Bank* CresusBank;
 
     //void (*pfunUser)(int&,int&,int&,const std::string, const int&);
-    CresusBank = new Bank;
+    CresusBank = new Entities::Bank;
 //   std::fill(userBase->intBase, userBase->intBase + SIZE_PINT,0);
 //  std::fill(userBase->floatBase, userBase->floatBase + SIZE_PFLOAT,0);
 
-    showMenu(CresusBank);
+    Menus::showMenu(CresusBank);
 
     delete CresusBank;
 

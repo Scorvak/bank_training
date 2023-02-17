@@ -279,3 +279,7 @@ void Entities::Bank::showFriends(){
 }
 
 void Entities::Bank::resetDB(const int& index){this->bankDB.intBase[index] = 0;}
+
+// void (*pfunUser)(int&,int&,int&,const std::string, const int&);
+// std::fill(userBase->intBase, userBase->intBase + SIZE_PINT,0);
+// std::fill(userBase->floatBase, userBase->floatBase + SIZE_PFLOAT,0);

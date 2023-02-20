@@ -71,10 +71,13 @@ public:
 class Bank {
 
 private:
+    int ID_customers[SIZE_CUSTOMERS];
     People customers[SIZE_CUSTOMERS];
     DataBase bankDB;
     std::string currencies[3] = {"euro","dollar","yen"};
 public:
+
+    Bank();
 
     void getName();
     void getAge();
@@ -117,6 +120,7 @@ public:
     void resetFriends();
     void addFriend();
     void showFriends();
+    void transfer2friend();
 
 // Resets bank database
     void resetDB(const int& index);

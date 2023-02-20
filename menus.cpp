@@ -61,7 +61,6 @@ void Menus::accountMenu(Entities::Bank* bank)
                 break;
                 
             case 2:
-                std::cout << "Ongoing development...\n\n";
                 Menus::operationMenu(bank);
                 break;
 
@@ -101,6 +100,8 @@ void Menus::operationMenu(Entities::Bank* bank){
         case 2:
             std::cout << "To whom do you want transfer money ?\n" << std::endl;
             bank->showFriends();
+            bank->getChoice("Selected friend: ");
+            
             Menus::operationMenu(bank);
             break;
 

@@ -1,6 +1,14 @@
 #include "classes.h"
 
-// Wallet class methods 
+// People class methods
+
+Entities::People::People(){this->ownWallet.money.euro = 0; this->ownWallet.currency = euro;};
+
+// Bank class methods 
+
+Entities::Bank::Bank(){std::fill(this->ID_customers, this->ID_customers + SIZE_CUSTOMERS,0);};
+
+
 
 void Entities::Bank::getName(){Basics::getinputUser("Please enter your firstname:\n",this->bankDB.stringBase[4], this->customers[this->bankDB.intBase[0]].firstname);}
 void Entities::Bank::getPassword(){Basics::getinputUser("Please enter a password for your account:\n",this->bankDB.stringBase[4], this->customers[this->bankDB.intBase[0]].password);}
@@ -32,7 +40,7 @@ void Entities::Bank::getDebit(const std::string& qUser, const int& threshold){
         this->bankDB.intBase[3]++;
         getDebit("Incorrect money amount, please retry:", threshold);
     }else if(this->bankDB.intBase[3] > 0 && this->customers[this->bankDB.intBase[0]].ownWallet.balance.expenses[this->bankDB.intBase[2]] >= threshold){
-        std::cout << "Thank you, we successfully take in account the debit of " << this->customers[this->bankDB.intBase[0]].ownWallet.balance.profits[this->bankDB.intBase[2]]<< " " << showCurrency() << "." << std::endl;
+        std::cout << "Thank you, we successfully take in account the debit of " << this->customers[this->bankDB.intBase[0]].ownWallet.balance.expenses[this->bankDB.intBase[2]]<< " " << showCurrency() << "." << std::endl;
     }
 
 }
@@ -247,7 +255,6 @@ void Entities::Bank::checkSpot(const std::string& rUser){
     }
 
 
-Entities::People::People(){this->ownWallet.money.euro = 0; this->ownWallet.currency = euro;};
 
 void Entities::Bank::resetFriends(){for(this->bankDB.intBase[4] = 0; this->bankDB.intBase[4] < SIZE_FRIENDS;this->bankDB.intBase[4]++){this->customers[this->bankDB.intBase[0]].friends[this->bankDB.intBase[4]] = "userfree";}}
 
@@ -276,6 +283,14 @@ void Entities::Bank::showFriends(){
         {this->bankDB.stringBase[4] = this->customers[this->bankDB.intBase[0]].friends[this->bankDB.intBase[4]]; std::cout << "\t" << this->bankDB.intBase[4] + 1 << ". "<< this->bankDB.stringBase[4] << std::endl;}
 
     }
+}
+
+void Entities::Bank::transfer2friend()
+{
+    std::cout << "Your money will be transfered towards " << this->customers[this->bankDB.intBase[0]].friends[this->bankDB.intBase[1]] << "'s account.";
+    this->getDebit("How much do you want to transfer ?",0);
+    this->customers[this->bankDB.intBase[0]].ownWallet.balance.expenses[this->bankDB.intBase[2]];
+
 }
 
 void Entities::Bank::resetDB(const int& index){this->bankDB.intBase[index] = 0;}

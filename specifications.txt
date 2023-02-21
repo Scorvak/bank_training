@@ -1,0 +1,15 @@
+--- Specifications du développement de gestion de comptes bancaire ---
+
+Glossaire des symboles:
+
+# Développement à réaliser.
+- Sous-partie obligatoire.
+* Sous-partie optionnelle.
+
+# Transfert d'argent vers un compte ami
+
+Prérequis: 
+	- Avoir un identifiant unique par compte à stocker.
+	- Sauvegarder la liste des identifiants enregistrés par la banque.
+	- Lire la liste si existante ou créer une liste vide.
+	* Chiffrer la liste avec une clef.

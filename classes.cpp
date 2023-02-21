@@ -2,7 +2,11 @@
 
 // People class methods
 
-Entities::People::People(){this->ownWallet.money.euro = 0; this->ownWallet.currency = euro;};
+Entities::People::People(){
+    
+    this->ownWallet.money.euro = 0; this->ownWallet.currency = euro;
+    std::fill(this->friends, this->friends + SIZE_CUSTOMERS,0);
+};
 
 // Bank class methods 
 
